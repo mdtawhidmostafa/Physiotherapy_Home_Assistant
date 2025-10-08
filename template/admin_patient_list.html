@@ -1,0 +1,186 @@
+{% include "Header_admin.html"%}
+<style>
+    .admin_profile_body{
+        margin: 2em 0 2em 0;
+        height: 40em;
+        overflow: auto;
+    }
+    .admin_profile_body .admin_profile_content{
+        display: flex;
+        width: 100%;
+    }
+    .admin_profile_body .admin_profile_content .left-section {
+        flex: 1;
+        padding: 3em 5em 3em 3em;
+        background-color: rgb(173, 245, 245);
+        height: 25em;
+    }
+    .admin_profile_body .admin_profile_content .left-section button{
+        font-size: 1.3em;
+        border-style: none;
+        border-radius: 0.5em;
+        margin: 1em 0 0 2.1em;
+        background-color: #31b302;
+        color: #FFFFFF;
+    }
+    .admin_profile_body .admin_profile_content .left-section .hbr {
+        padding: 1em 3.9em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .dl {
+        padding: 1em 0.12em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .pl {
+        padding: 1em 1.9em;
+        background-color: #437B75;
+    }
+    .admin_profile_body .admin_profile_content .left-section .cel {
+        padding: 1em 2.9em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .ccd {
+        padding: 1em 0.8em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .cec {
+        padding: 1em 0.2em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .nac {
+        padding: 1em 2.2em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .back {
+        padding: 1em 2.3em; 
+    }
+    .admin_profile_body .admin_profile_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    
+    .admin_profile_body .admin_profile_content .right-section {
+        flex: 6;
+        padding: 1em;
+        margin-left: 0.5em;
+        background-color: #EEE9E9;
+        text-align: center;
+        font-size: 1.5em;
+    }
+    .admin_profile_body .admin_profile_content .right-section table, td, th {
+        border: 1px solid;
+        padding: 0.3em;
+      }
+      
+    .admin_profile_body .admin_profile_content .right-section table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+    .admin_profile_body .admin_profile_content .right-section table button{padding: 0.5em 1.5em; font-size:1em;border-radius:5em;}
+    .admin_profile_body .admin_profile_content .right-section table button:hover{background-color: #029b26;color: white;}
+</style>
+
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}" style="text-align: center; font-size: 1.8em; color: #ffffff; background-color: {% if message.tags == 'error' %}rgb(248, 8, 8){% elif message.tags == 'success' %}rgb(4, 143, 4){% endif %};">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<section class="admin_profile_body">
+    <div class="admin_profile_content">
+        <div class="left-section"style="padding: 3em 6em 20em 3em;">
+            <button class="hbr" onclick="window.location.href = '{% url 'admins' %}';"> Home </button>
+            <button class="dl" onclick="window.location.href = '{% url 'A_doctor' %}';">List of Physiotherapists</button>
+            <button class="pl" onclick="window.location.href = '{% url 'A_p_list' %}';">List of Patients</button>
+            <button class="cel" onclick="window.location.href = '{% url 'a_exercise_db' %}';">Exercise List</button>
+            <button class="ccd" onclick="window.location.href = '{% url 'a_category_db' %}';">Category of disease</button>
+            <!--<button class="cec" onclick="window.location.href = '{% url 'check_exercise' %}';">Check Exercise Completion</button>-->
+            <button class="nac" onclick="window.location.href = '{% url 'a_db' %}';">Admin Panels</button>
+        </div>
+        <div class="right-section">
+            <h2>List of patients</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Number</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>User Name</th>
+                        <th>Gender</th>
+                        <th>Phone Number</th>
+                        <th>Emergency Phone</th>
+                        <th>Email Address</th>
+                        <th>Address</th>
+                        {% if delet_a %}
+                            <th>Action</th>
+                        {% endif %}
+                        <th>Edit Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patient_items %}
+                        <tr>
+                            <td>{{ patient.P_number }}</td>
+                            <td>{{ patient.fname }}</td>
+                            <td>{{ patient.lname }}</td>
+                            <td>{{patient.username}}</td>
+                            <td>{{ patient.gender }}</td>
+                            <td>{{patient.contact}}</td>
+                            <td>{{patient.econtact}}</td>
+                            <td>{{patient.email}}</td>
+                            <td>{{patient.address}}</td>
+                            {% if delet_a %}
+                                <td><button onclick="deletePatient('{{ patient.P_number }}')">Delete</button></td>
+                            {% endif %}
+                            <td><button onclick="EditPatient('{{ patient.P_number }}')">Edit</button></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <script>
+                function deletePatient(p_number) {
+                    var form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/admin/patient/delete/';
+            
+                    var inputSNumber = document.createElement('input');
+                    inputSNumber.type = 'hidden';
+                    inputSNumber.name = 'p_number';
+                    inputSNumber.value = p_number;
+            
+                    var csrfToken = document.createElement('input');
+                    csrfToken.type = 'hidden';
+                    csrfToken.name = 'csrfmiddlewaretoken';
+                    csrfToken.value = '{{ csrf_token }}';
+            
+                    form.appendChild(inputSNumber);
+                    form.appendChild(csrfToken);
+            
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+                function EditPatient(p_number) {
+                    var form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/admin/patient/edit/profile/';
+            
+                    var inputSNumber = document.createElement('input');
+                    inputSNumber.type = 'hidden';
+                    inputSNumber.name = 'p_number';
+                    inputSNumber.value = p_number;
+            
+                    var csrfToken = document.createElement('input');
+                    csrfToken.type = 'hidden';
+                    csrfToken.name = 'csrfmiddlewaretoken';
+                    csrfToken.value = '{{ csrf_token }}';
+            
+                    form.appendChild(inputSNumber);
+                    form.appendChild(csrfToken);
+            
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            </script>
+        </div>
+    </div>
+</section>
+
+{% include "Footer_patient.html" %}

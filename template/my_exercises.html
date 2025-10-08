@@ -1,0 +1,89 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body{height:50em;overflow: auto;}
+    .p_home_content{height:49em;}
+    .left-section{height:48em;}
+    .img_ex_my button{
+        padding:0 1em 0 1em;
+        font-size:1em;
+        border-radius: 0.2em;
+    }
+    .img_ex_my {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .horizontal {
+        width: calc(50% - 0.5em);
+        margin-bottom: 0.5em;
+    }
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+    .img_ex_my button:hover{
+        background-color: #029b26;
+        color: white;
+    }
+
+</style>
+
+
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section" style="height:45em;">
+            <button class="hbe" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="ebe" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rbe" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="abe" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+        </div>
+        <div class="right-section">
+            <h1>My Problem List</h1>
+            <div class="img_ex_my">
+                {% for result in ex_list %}
+                <div class="horizontal">
+                    <div class="form-group">
+                        <label for="eID"><img src="{{ result.image }}" alt="User Photo" id='profile' style="width:9em;height:8em;"></label><br>
+                        <button onclick="redirectToNewPage('{{ result.rid }}')">{{ result.name }} </button><br>
+                        <label> Doctor: {{result.dname}}</label>
+                    </div>
+                </div>
+                {% endfor %}
+                <script>
+                    function redirectToNewPage(rid) {
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'rid';
+                        input.value = rid;
+                    
+                        var csrfToken = document.createElement('input');
+                        csrfToken.type = 'hidden';
+                        csrfToken.name = 'csrfmiddlewaretoken';
+                        csrfToken.value = '{{ csrf_token }}'; 
+                    
+                        var form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/patient/problem/exercise/';
+                        form.appendChild(input);
+                        form.appendChild(csrfToken); 
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                </script>
+            </div>
+            {% if show_message %}
+            <div>
+                <p>Please consult with a physiotherapist doctor.<br>
+                After that you can start the exercise using your<br>
+                <a href="{% url 'patient_addrid' %}" style="text-decoration:none;"><b style="color: #960e0e;">Prescription</a></b> or <a href="{% url 'patient_addrid' %}"style="text-decoration:none;"><b style="color: #960e0e;">Ref ID</b></a>.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}

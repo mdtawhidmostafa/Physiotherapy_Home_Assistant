@@ -1,0 +1,21 @@
+.loader {
+    background: url('{% static "images/logoupbr.png" %}') no-repeat center center;
+    background-size: contain;
+    width: 120px;
+    height: 120px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: none; /* Hide by default */
+  }
+  
+  body.loading {
+    overflow: hidden;
+  }
+  
+  body.loading .loader {
+    display: block; /* Show loader when body has loading class */
+  }
+  

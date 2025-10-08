@@ -1,0 +1,331 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body{height:55em;overflow: auto;}
+    .p_home_content{height:54em;}
+    .img_ex_my button{
+        padding:0.3em 1.5em 0.3em 1.5em;
+        font-size:1em;
+        border-radius: 0.2em;
+    }
+    .img_ex_my {
+        text-align:center;
+    }
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+    .p_home_body .p_home_content .left-section .back {
+        margin-top:3em;
+        padding: 0.3em 1em;
+    }
+    .img_ex_my button:hover{
+        background-color: #029b26;
+        color: white;
+    }
+    .up_video_sec_ex_v{
+        border:
+        
+    }
+    .up_video_sec_ex_v input{
+        font-size:1em;
+    }
+    .up_video_sec_ex select{
+        font-size:1em;
+    }
+    .container {
+        display: flex;              
+        justify-content: space-between;
+        margin-bottom: 20px;         
+    }
+    
+    .container .left-sectionss {
+        flex: 1;
+        margin-right: 20px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .container .video-section {
+        flex: 1;
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .container button {
+        margin: 5px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    .container button:hover {
+        background-color: #029b26;
+        color: black;
+    }
+    .video-buttons {
+        display: flex;
+        flex-direction: column; 
+        align-items: center; 
+        margin-top: 20px; 
+    }
+    
+    .video-buttons .button-group {
+        display: flex; 
+        gap: 10px; 
+    }
+    .video-buttons button {
+        margin: 5px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    .video-buttons button:hover {
+        background-color: #029b26;
+        color: black;
+    }
+    .container #timer {
+        margin-top: 20px;
+        font-size: 1.2em;
+    }
+</style>
+
+
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section" style="height:49.9em;">
+            <button class="hbe" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="ebe" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rbe" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="abe" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+            <button class="back" onclick="goBack()"><i class="fa fa-arrow-circle-left"></i> Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+        </div>
+        <div class="right-section">
+            <h1>Record your "{{exercise_name}}" exercise Video</h1>
+            <div class="container">
+                <div class="left-sectionss">
+                    <div class="controls">
+                        <button id="startButton">Start Video</button>
+                        <button id="pauseButton" disabled>Pause Video</button>
+                        <button id="stopButton">Stop Video</button>
+                    </div>
+                    <div id="timer">Timer: <span id="timeRemaining">{{ time }}</span> seconds</div>
+                    <video id="cameraFeed" style="width: 100%; margin-top: 20px;" autoplay playsinline></video> 
+                    <video id="recordedVideo" style="display:none; width: 100%; margin-top: 20px;" autoplay></video>
+                </div>
+                <div class="video-section">
+                    <h2>Recorded Video</h2>
+                    <video id="finalVideo" controls style="display:none; width: 100%; margin-top: 20px;"></video>
+                    <div class="video-buttons">
+                        <div class="button-group">
+                            <button id="deleteVideo" style="display:none;">Delete Video</button>
+                            <button type="button" id="submitButton" onclick="submitVideo()" style="display:none;">Submit Video</button>
+                        </div>
+                        <p id="recordAgainMessage" style="display:none;">If you want to record your exercise video again, please click the 'Delete Video' button.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="resultDiv" style="display: none; margin: 0.5em 0 0 0; background-color: #029b26; color: white; font-size: 1.2em;"></div>
+            <div id="loader" style="display: none; margin: 0.5em 0 0 0;">
+                <img src="/static/images/pre_loader2.gif" alt="Loading..." style="width: 50px; height: 50px;">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            let mediaRecorder;
+            let recordedChunks = [];
+            let timerInterval;
+            let timeRemaining; 
+            const timerDisplay = document.getElementById('timeRemaining');
+            const finalVideoElement = document.getElementById('finalVideo');
+            const cameraFeedElement = document.getElementById('cameraFeed'); 
+            let cameraStream; 
+            let savedVideoBlob; 
+            const initialTime = {{ time }}; 
+            timeRemaining = initialTime; 
+            
+            window.onload = () => {
+                startCamera();
+            };
+        
+            document.getElementById('startButton').onclick = startRecording;
+            document.getElementById('pauseButton').onclick = pauseRecording;
+            document.getElementById('stopButton').onclick = stopRecording;
+            document.getElementById('deleteVideo').onclick = deleteVideo;
+        
+            function startCamera() {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        cameraStream = stream; 
+                        cameraFeedElement.srcObject = stream; 
+                        timerDisplay.innerText = formatTime(timeRemaining);
+                    })
+                    .catch(err => console.error('Error accessing media devices.', err));
+            }
+        
+            function startRecording() {
+                navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+                    .then(stream => {
+                        mediaRecorder = new MediaRecorder(stream);
+                        recordedChunks = []; 
+        
+                        mediaRecorder.ondataavailable = e => {
+                            recordedChunks.push(e.data);
+                        };
+        
+                        mediaRecorder.onstop = () => {
+                            const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                            const videoURL = URL.createObjectURL(blob);
+                            finalVideoElement.src = videoURL; 
+                            finalVideoElement.style.display = 'block'; 
+                            savedVideoBlob = blob; 
+                            document.getElementById('submitButton').style.display = 'block';
+                            document.getElementById('deleteVideo').style.display = 'block';
+                            cameraFeedElement.srcObject = null; 
+                        };
+        
+                        mediaRecorder.start();
+                        timerInterval = setInterval(updateTimer, 1000); 
+        
+                        document.getElementById('startButton').disabled = true;
+                        document.getElementById('pauseButton').disabled = false;
+                        document.getElementById('stopButton').disabled = false;
+                    })
+                    .catch(err => console.error('Error accessing media devices.', err));
+            }
+        
+            function pauseRecording() {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.pause();  
+                    clearInterval(timerInterval); 
+                    document.getElementById('pauseButton').innerText = 'Resume Video'; 
+                    document.getElementById('pauseButton').onclick = resumeRecording; 
+                }
+            }
+        
+            function resumeRecording() {
+                if (mediaRecorder && mediaRecorder.state === 'paused') {
+                    mediaRecorder.resume(); 
+                    timerInterval = setInterval(updateTimer, 1000); 
+                    document.getElementById('pauseButton').innerText = 'Pause Video'; 
+                    document.getElementById('pauseButton').onclick = pauseRecording; 
+                }
+            }
+        
+            function stopRecording() {
+                if (mediaRecorder) {
+                    mediaRecorder.stop(); 
+                    clearInterval(timerInterval);
+        
+                    document.getElementById('startButton').disabled = false;
+                    document.getElementById('pauseButton').disabled = true;
+                    document.getElementById('stopButton').disabled = true;
+        
+                    cameraStream.getTracks().forEach(track => track.stop());
+                    cameraFeedElement.srcObject = null; 
+                }
+            }
+        
+            function updateTimer() {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    timerDisplay.innerText = formatTime(timeRemaining); 
+                } else {
+                    clearInterval(timerInterval); 
+                    stopRecording(); 
+                }
+            }
+        
+            function formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`; 
+            }
+        
+            function submitVideo() {
+                if (!savedVideoBlob) {
+                    console.error('No video available to submit.');
+                    return;
+                }
+            
+                const formData = new FormData();
+                formData.append('video', savedVideoBlob);  
+                formData.append('video_duration', initialTime - timeRemaining);  
+                formData.append('rid', '{{ rid }}');  
+                formData.append('exercise', '{{ exercise }}');  
+            
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/patient/problem/exercise/video/predict/score_cam/', true);
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');  
+        
+                xhr.upload.onprogress = function(event) {
+                    if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 100; 
+                        document.querySelector('.progress-bar').style.width = percentComplete + '%';
+                    }
+                };
+        
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        document.getElementById('resultDiv').innerText = `Predicted Score: ${response.predicted_score}`;
+                        document.getElementById('resultDiv').style.display = 'block';
+                        finalVideoElement.style.display = 'none'; 
+                        showMessage(); 
+                        
+                    } else {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        document.getElementById('resultDiv').innerText = `Error: ${errorResponse.error}`;
+                        document.getElementById('resultDiv').style.display = 'block';
+                    }
+                    document.getElementById('loader').style.display = 'none';
+                };
+        
+                xhr.send(formData);
+                document.getElementById('loader').style.display = 'block'; 
+            }
+        
+            function deleteVideo() {
+                recordedChunks = [];
+                finalVideoElement.src = '';
+                finalVideoElement.style.display = 'none'; 
+                document.getElementById('submitButton').style.display = 'none'; 
+                document.getElementById('deleteVideo').style.display = 'none';
+                timeRemaining = initialTime; 
+                timerDisplay.innerText = formatTime(timeRemaining); 
+                document.getElementById('resultDiv').style.display = 'none'; 
+                document.getElementById('recordAgainMessage').style.display = 'none'; 
+        
+                startCamera();
+            }
+        
+            function showMessage() {
+                document.getElementById('recordAgainMessage').style.display = 'block'; 
+            }
+        </script>
+        
+    </div>
+        
+</section>
+
+{% include "Footer_patient.html" %}

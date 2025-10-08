@@ -1,0 +1,44 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body .p_home_content .left-section .rqbq {
+        padding: 0.3em 0.9em;
+        background-color: #437B75;
+    }
+    .p_home_body .p_home_content .left-section .rbq {
+        padding: 0.3em 3em;
+    }
+    .p_home_body .p_home_content .left-section .hbq {
+        padding: 0.3em 3.25em;
+    }
+    .p_home_body .p_home_content .left-section .abq {
+        padding: 0.3em 2.1em;
+    }
+    .p_home_body .p_home_content .left-section .ebq {
+        padding: 0.3em 1.7em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+    .p_home_body .p_home_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+</style>
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section">
+            <button class="hbq" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="ebq" onclick="window.location.href = '{% url 'patient_exc' %}';">My Exercises</button>
+            <button class="rbq" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="abq" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbq" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+        </div>
+        <div class="right-section">
+            <h1><b> Request Online Session <br>Schedule New Online Session</b></h1>
+            <h5>We will give a notification to the physiotherapist <br> and session will be scheduled if physiotherapist confirmed the session</h5>
+            
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}

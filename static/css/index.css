@@ -1,0 +1,244 @@
+
+.heads {
+    background-color: rgb(173, 245, 245);
+    display: flex;
+    align-items: left;
+}
+.heads .im {
+    width: 10%;
+    height: 10%;
+    padding-left: 12%;
+}
+
+.heads h1 {
+    padding-left: 2%;
+    padding-top: 1%;
+    padding-right: 20%;
+}
+.heads button{
+    background-color: #1a7d73; 
+    border: none; 
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 30%; 
+}
+.heads button:hover {
+    background-color: #149f32;
+    color: #111111;
+}
+
+.section1{
+    display: flex;
+    align-items: right;
+    padding-top: 0.5%;
+    display: flex;
+}
+
+.section1 .im {
+    width: 65%;
+    flex-basis: 60%;
+}
+.section1 .div1{
+    flex-basis: 40%;
+    padding-left: 2%;
+    padding-top: 5%;
+}
+.section1 .div1 .head {
+    font-size: 3.6em;
+}
+.section1 .div1 p{
+    font-size: 1.5em;
+}
+.section1 .div1 button{
+    font-size: 20px;
+    background-color: #1a7d73; 
+    border: none; 
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5em;
+    padding: 2%;
+}
+.section1 .div1 button:hover{
+    background-color: #149f32;
+    color: #111111;
+}
+.section1 .slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+  }
+  
+.section1 .slides img {
+    width: 100%;
+    display: none;
+  }
+.section1 .slides img {
+    border-radius: 2%;
+  }
+.section1 .slides img.fade {
+    animation: fade 8s ease-in-out;
+  }
+  
+@keyframes fade {
+    10% {opacity: 1}
+    15%, 95% {opacity: 1}
+    100% {opacity: 1}
+  }
+
+.section2{
+    display: flex;
+    align-items: right;
+    padding-top: 2%;
+    display: flex;
+    padding-bottom: 2%;
+}
+.section2 .imge {
+    width: 35%;
+    border-radius: 7%;
+    flex-basis: 40%;
+    padding-left: 2%;
+}
+.section2 .aboutp{
+    flex-basis: 60%;
+    padding-left: 3%;
+}
+.section2 .aboutp h1{
+    font-size: 3.0em;
+}
+.section2 .aboutp p{
+    font-size: 1.3em;
+}
+
+.foots{
+    background-color: rgb(173, 245, 245);
+    display: flex;
+    align-items: right;
+    display: flex;
+}
+.foots img{
+    width: 14%;
+    height: 8%;
+    padding-left: 15%;
+}
+.foots .im{
+    flex-basis: 12%;
+}
+.foots .footdiv{
+    flex-basis: 88%;
+}
+.foots .footdiv h2{
+    text-align: center;
+}
+.foots .footdiv ul{
+    list-style-type: none;
+    margin: 1%;
+    overflow: hidden;
+    font-size: 1.2em;
+    padding-left: 3%;
+}
+.foots .footdiv li{
+    float: left;
+    padding: 2%;
+}
+.foots .footdiv li a {
+    display: block;
+    text-align: center;
+    padding: 5%;
+    text-decoration: none;
+  }
+.footdiv .footdiv li a:hover {
+    background-color: #149f32;
+    color: #111111;
+}
+.footer-bottom {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+/* for pc */
+@media (min-width: 768px) {
+    .heads h1 {
+        font-size: 2.5em; }
+    .heads button{
+            padding: 1%;
+            font-size: 25px;
+            margin: 1.5%;
+        }
+
+}
+
+/* Styles for screens between 480px and 768px (tablets) */
+@media (min-width: 480px) and (max-width: 768px) {
+    .heads .im {
+        width: 20%;
+        height: 20%;
+    }
+    .heads h1 {
+        font-size: 1.5em;
+        padding-right: 15%; }
+    .heads button{
+            padding: 1%;
+            font-size: 15px;
+            margin: 2%;
+        }
+
+}
+
+/* Styles for screens less than 480px (phones) */
+@media (max-width: 480px) {
+    .heads .im {
+        width: 15%;
+        height: 15%;
+    }
+    .heads h1 {
+        font-size: 1.0em;
+        padding-right: 10%; }
+    .heads button{
+            padding: 1%;
+            font-size: 10px;
+            margin: 2%;
+        }
+    .section1 {
+        flex-direction: column;
+    }
+    .section1 .im,
+    .section1 .div1 {
+        width: 100%;
+        flex-basis: auto;
+    }
+    .section2 {
+        flex-direction: column;
+    }
+    .section2 .imge,
+    .section2 .aboutp {
+        width: 100%;
+        flex-basis: auto;
+        padding-left: 0;
+    }
+    .foots img {
+        width: 40%;
+        padding-left: 0;
+    }
+
+    .foots .im {
+        flex-basis: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .foots .footdiv {
+        flex-basis: 100%;
+    }
+}
+
+.adborder {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}

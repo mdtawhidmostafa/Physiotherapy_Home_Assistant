@@ -1,0 +1,93 @@
+{% include "Header_doctor.html" %}
+<style>
+    .d_home_body{height:35em;overflow: auto;}
+    .d_home_body .d_home_content .left-section .pbp {
+        padding: 0.3em 2.34em;
+        background-color: #437B75;
+    }
+    .d_home_body .d_home_content .left-section .hbp {
+        padding: 0.3em 3.6em;
+    }
+    .d_home_body .d_home_content .left-section .npbp {
+        padding: 0.3em 2.21em;
+    }
+    .d_home_body .d_home_content .left-section .osbp {
+        padding: 0.3em 1.6em;
+    }
+    .d_home_body .d_home_content .left-section .back {
+        margin-top:5em;
+        padding: 0.3em 1em;
+    }
+    .d_home_body .d_home_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    .right-section h2{margin:0.8em 0 0.5em 0; font-size:1.8em;} 
+    
+    .right-section  button{
+        padding: 0.2em 0.5em;
+        background-color: #5926f0;
+        color: white;
+        font-size: 1em;
+        border-radius: 0.9em;
+    }
+    .right-section  button:hover{
+        background-color: #149f32;
+        color: #111111;
+    }
+    .right-section .horizontal-form {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        font-size:1.2em;
+    }
+    
+    .right-section .horizontal-form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .right-section  .horizontal-form button {
+        align-self: flex-end; 
+    }
+    
+   
+</style>
+<section class="d_home_body">
+    <div class="d_home_content">
+        <div class="left-section">
+            <button class="hbp" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pbp" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npbp" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osbp" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+            <button class="back" onclick="goBack()"><i class="fa fa-arrow-circle-left"></i> Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+        </div>
+        <div class="right-section">
+            <h2>Appoint another doctor</h2>
+            <div class="upside">
+                <form method="post" action="{% url 'a_doctor_page' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="horizontal-form">
+                        <div class="form-group">
+                            <label for="rid">Patient RID Number:</label>
+                            <input type="text" id="rid" name="rid" value="{{ rid }}" readonly style="font-size:1em; width:8em;">
+                        </div>
+                        <div class="form-group">
+                            <label for="alDID">Another Doctor ID Number:</label>
+                            <input type="text" id="alDID" name="alDID" required pattern="[0-9]*" maxlength="7" style="font-size:1em; width:5em;">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

@@ -1,0 +1,120 @@
+{% include "Header_patient.html" %}
+
+<style>
+    .hidden {
+      display: none;
+    }
+    .right-section h1{ margin:-0.7em 0 0 0 ;}
+    .upload_Prescription_b button,.add_RefID_b button{
+        font-size: 1.1em;
+        border-style: none;
+        border-radius: 0.5em;
+        background-color: #31b302;
+        color: #FFFFFF;
+        padding: 0.5em 1em 0.5em 1em;
+        margin: 0.2em 0 0 0;
+    }
+    .horizontal_reid {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    .upload_Prescription_b,
+    .add_RefID_b {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    .upload_Prescription_b{
+        margin: 0 0 0 5.5em;
+    }
+    .add_RefID_b{
+        margin: 0 5.5em 0 0;
+    }
+    .uploadp,.uploadrid{
+        margin: 1.5em 0 0 0;
+    }
+    .uploadp button,.uploadrid button{
+        font-size: 0.8em;
+        border-style: none;
+        border-radius: 0.5em;
+        background-color: #31b302;
+        color: #FFFFFF;
+        padding: 0.5em 1em 0.5em 1em;
+        margin: 0.2em 0 0 0;
+    }
+    .uploadp input{ font-size:0.8em; margin:0.4em 0 0 0;}
+    .uploadrid input{ font-size:1em; margin:0.4em 0 0 0;}
+    .p_home_body .p_home_content .right-section button:hover{
+        background-color: #437B75;
+        color: #111111;
+    }
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+  </style>
+
+ 
+<section class="p_home_body">
+    <div>
+        {% if error %}
+                <div class="error-message" style="text-align: center;font-size: 1.8em;background-color: rgb(248, 8, 8);color: #ffffff;">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="success-message" style="text-align: center;font-size: 1.8em;background-color: rgb(4, 143, 4);color: #ffffff;">{{ success }}</div>
+        {% endif %}
+    </div>
+    <div class="p_home_content">
+        <div class="left-section">
+            <button class="hba" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="eba" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rba" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="aba" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+        </div>
+        <div class="right-section">
+            <h1>Add New Doctor</h1>
+            <div class="horizontal_reid">
+                <div class="upload_Prescription_b">
+                    <label>By Using Prescription</label>
+                    <button onclick="showUploadForm()">Prescription</button>
+                </div>
+                <div class="add_RefID_b">
+                    <label>By Using Referral ID</label>
+                    <button onclick="showReferralForm()">Referral ID</button>
+                </div>
+            </div>
+            <form id="uploadForm" class="hidden uploadp" method="post">
+                {% csrf_token %}
+                <label for="prescription">Upload Your Prescription Scan Copy or Picture Here :</label><br>
+                <input type="file" id="prescription" name="prescription" required><br><br>
+                <button type="submit">Upload</button>
+            </form>
+
+            <form id="referralForm" class="hidden uploadrid" method="post" action="{% url 'patient_validated' %}">
+                {% csrf_token %}
+                <label for="referralID">Write down the Referral ID provided by Doctor :</label><br>
+                <input type="text" id="referralID" name="referralID" maxlength=14 pattern="[0-9]{13,14}" required><br><br>
+                <button type="submit">Confirm</button>
+            </form>
+
+            <script>
+            function showUploadForm() {
+                document.getElementById("uploadForm").classList.remove("hidden");
+                document.getElementById("referralForm").classList.add("hidden");
+            }
+
+            function showReferralForm() {
+                document.getElementById("referralForm").classList.remove("hidden");
+                document.getElementById("uploadForm").classList.add("hidden");
+            }
+            </script>
+            
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}

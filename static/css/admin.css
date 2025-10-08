@@ -1,0 +1,138 @@
+
+.admin_header{
+    height: 6.5em;
+    background-color: rgb(173, 245, 245);
+    width: 100%;
+    border-radius: 2%;
+}
+.admin_header .header button{
+    padding: 0.3em 2em;
+    font-size: 1.2em;
+    border-style: none;
+    border-radius: 5%;
+    margin: 1em 0 0 2.5em;
+    background-color: #CA5858;
+    color: #FFFFFF;
+}
+.admin_header .header button:hover{
+    background-color: #149f32;
+    color: #111111;
+}
+.admin_header .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.admin_header .user-info {
+    display: flex;
+    align-items: center;
+    margin: 0.5em 5em 0 0;
+    font-size: 1.2em;
+}
+.admin_header .user-info img {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    margin-right: 1em;
+}
+
+
+.a_home_body{
+    margin: 2em 0 2em 0;
+    height: 34em;
+}
+.a_home_body .a_home_content{
+    display: flex;
+    width: 100%;
+}
+.a_home_body .a_home_content .left-section {
+    flex: 2;
+    background-color: rgb(173, 245, 245);
+    height: 25em;
+}
+.a_home_body .a_home_content .left-section button{
+    font-size: 1.3em;
+    border-style: none;
+    border-radius: 0.5em;
+    margin: 1em 0 0 2.5em;
+    background-color: #31b302;
+    color: #FFFFFF;
+}
+
+.a_home_body .a_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}
+
+.a_home_body .a_home_content .right-section {
+    flex: 4;
+    padding: 2em;
+    margin-left: 0.5em;
+    background-color: #EEE9E9;
+    text-align: center;
+    font-size: 1.5em;
+}
+.a_home_body .a_home_content .right-section p{
+    padding-top: 3em;
+}
+
+/*patient Profile*/
+
+
+/* online session */
+.a_home_body .a_home_content .left-section .pbo {
+    padding: 0.3em 2.34em;
+}
+.a_home_body .a_home_content .left-section .hbo {
+    padding: 0.3em 3.25em;
+}
+.a_home_body .a_home_content .left-section .npbo {
+    padding: 0.3em 2.1em;
+}
+.a_home_body .a_home_content .left-section .osbo {
+    padding: 0.3em 1.7em;
+    background-color: #437B75;
+}
+.a_home_body .a_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}
+
+/* my patient */
+.a_home_body .a_home_content .left-section .pbp {
+    padding: 0.3em 3em;
+    background-color: #437B75;
+}
+.a_home_body .a_home_content .left-section .hbp {
+    padding: 0.3em 3.25em;
+}
+.a_home_body .a_home_content .left-section .npbp {
+    padding: 0.3em 2.1em;
+}
+.a_home_body .a_home_content .left-section .osbp {
+    padding: 0.3em 1.7em;
+}
+.a_home_body .a_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}
+
+/* new patient */
+.a_home_body .a_home_content .left-section .pbn {
+    padding: 0.3em 3em;
+}
+.a_home_body .a_home_content .left-section .hbn {
+    padding: 0.3em 3.25em;
+}
+.a_home_body .a_home_content .left-section .npbn {
+    padding: 0.3em 2.1em;
+    background-color: #437B75;
+}
+.a_home_body .a_home_content .left-section .osbn {
+    padding: 0.3em 1.7em;
+}
+.a_home_body .a_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}

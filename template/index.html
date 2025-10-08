@@ -1,0 +1,32 @@
+{% include "Header.html"%}
+<section  class="section1">
+    <div class="div1">
+        <p class="head">Ease Your Pain Today</p>
+        <p>Expert physiotherapy services at your doorstep. Get personalized care tailored to your needs.</p>
+        <button onclick="window.location.href = '{% url 'user' %}';">Get Start</button>
+    </div>
+    <div class="slideshow-container im">
+        <div class="slides">
+          <img src="/static/images/slide/01.png" alt="Slide 1">
+          <img src="/static/images/slide/02.jpeg" alt="Slide 2">
+          <img src="/static/images/slide/03.jpeg" alt="Slide 3">
+          <img src="/static/images/slide/04.jpg" alt="Slide 4">
+          <img src="/static/images/slide/05.jpg" alt="Slide 5">
+          <img src="/static/images/slide/06.jpg" alt="Slide 6">
+          <img src="/static/images/slide/07.jpg" alt="Slide 7">
+          <img src="/static/images/slide/08.jpg" alt="Slide 8">
+          <img src="/static/images/slide/09.jpg" alt="Slide 9">
+          <img src="/static/images/slide/10.jpg" alt="Slide 10">
+    </div>
+    <script src="/static/js/SlideShow.js"></script>
+</section>
+<section  class="section2">
+    <img src="/static/images/03.png" alt="about image" class="imge">
+    <div class="aboutp">
+     <h1> About us</h1>
+    <p>Welcome to physiotherapy home assistant. With a team of highly skilled and experienced physiotherapists, we are dedicated to helping our clients achieve optimal physical health and well-being.<br><br>
+      At physiotherapy home assistant, we understand the importance of personalized care and tailor our treatments to meet the unique needs of each individual. Whether you are recovering from an injury, managing a chronic condition, or simply looking to improve your overall fitness, our team is here to support you every step of the way. With our state-of-the-art facilities and evidence-based approach, you can trust us to deliver the highest quality care.</p>
+    </div>
+</section>
+
+{% include "Footer.html" %}

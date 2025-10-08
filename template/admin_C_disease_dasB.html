@@ -1,0 +1,116 @@
+{% include "Header_admin.html"%}
+    <style>
+        .admin_profile_body{
+            margin: 2em 0 2em 0;
+            height: 40em;
+            overflow: auto;
+        }
+        .admin_profile_body .admin_profile_content{
+            display: flex;
+            width: 100%;
+        }
+        .admin_profile_body .admin_profile_content .left-section {
+            flex: 2;
+            padding: 3em 5em 3em 3em;
+            background-color: rgb(173, 245, 245);
+            height: 25em;
+        }
+        .admin_profile_body .admin_profile_content .left-section button{
+            font-size: 1.3em;
+            border-style: none;
+            border-radius: 0.5em;
+            margin: 1em 0 0 2.1em;
+            background-color: #31b302;
+            color: #FFFFFF;
+        }
+        .admin_profile_body .admin_profile_content .left-section .hbr {
+            padding: 1em 7em;
+        }
+        .admin_profile_body .admin_profile_content .left-section .dl {
+            padding: 1em 3.3em;
+        }
+        .admin_profile_body .admin_profile_content .left-section .pl {
+            padding: 1em 5.1em;
+        }
+        .admin_profile_body .admin_profile_content .left-section .cel {
+            padding: 1em 5.6em;
+        } 
+        .admin_profile_body .admin_profile_content .left-section .ccd {
+            padding: 1em 4.1em;
+            background-color: #437B75;
+        }
+        .admin_profile_body .admin_profile_content .left-section .cec {
+            padding: 1em 2.5em;
+        }
+        .admin_profile_body .admin_profile_content .left-section .nac {
+            padding: 1em 5.4em;
+        }
+        .admin_profile_body .admin_profile_content .left-section button:hover{
+            background-color: #029b26;
+            color: #111111;
+        }
+        
+        .admin_profile_body .admin_profile_content .right-section {
+            flex: 5;
+            padding: 1em;
+            margin-left: 0.5em;
+            background-color: #EEE9E9;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        .admin_profile_body .admin_profile_content .right-section button{
+            font-size: 1.3em;
+            border-style: none;
+            border-radius: 0.5em;
+            margin: 3em 0 0 2.1em;
+            background-color: #31b302;
+            color: #FFFFFF;
+        }
+        .admin_profile_body .admin_profile_content .right-section .adl{padding: 1em 2em;}
+        .admin_profile_body .admin_profile_content .right-section .nadl{padding: 1em 1em;}
+        .admin_profile_body .admin_profile_content .right-section .lpd{padding: 1em 1em;}
+        .admin_profile_body .admin_profile_content .right-section .notification-badge {
+            position: relative;
+          }
+        
+        .admin_profile_body .admin_profile_content .right-section .badge {
+            position: absolute;
+            top: -0.7em;
+            right: -0.1em;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 8px;
+            font-size: 1.5em;
+          }
+
+    </style>
+
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}" style="text-align: center; font-size: 1.8em; color: #ffffff; background-color: {% if message.tags == 'error' %}rgb(248, 8, 8){% elif message.tags == 'success' %}rgb(4, 143, 4){% endif %};">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<section class="admin_profile_body">
+    <div class="admin_profile_content">
+        <div class="left-section"style="padding: 3em 6em 23em 3em;">
+            <button class="hbr" onclick="window.location.href = '{% url 'admins' %}';"> Home </button>
+            <button class="dl" onclick="window.location.href = '{% url 'A_doctor' %}';">List of Physiotherapists</button>
+            <button class="pl" onclick="window.location.href = '{% url 'A_p_list' %}';">List of Patients</button>
+            <button class="cel" onclick="window.location.href = '{% url 'a_exercise_db' %}';">Exercise List</button>
+            <button class="ccd" onclick="window.location.href = '{% url 'a_category_db' %}';">Category of disease</button>
+            <!--<button class="cec" onclick="window.location.href = '{% url 'check_exercise' %}';">Check Exercise Completion</button>-->
+            <button class="nac" onclick="window.location.href = '{% url 'a_db' %}';">Admin Panels</button>
+        </div>
+        <div class="right-section">
+            <h1 style="margin:1em 0 0 0 ;font-size:2em;">This is the disease category dashboard</h1>
+            <button class="adl" onclick="window.location.href = '{% url 'disease_list_show' %}';">Category of disease List</button>
+            <button class="lpd" onclick="window.location.href = '{% url 'Category_disease_page' %}';">Create New Category</button>
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

@@ -1,0 +1,151 @@
+
+.doctor_header{
+    height: 6.5em;
+    background-color: rgb(173, 245, 245);
+    width: 100%;
+    border-radius: 2%;
+}
+.doctor_header .header button{
+    padding: 0.3em 2em;
+    font-size: 1.2em;
+    border-style: none;
+    border-radius: 5%;
+    margin: 1em 0 0 2.5em;
+    background-color: #CA5858;
+    color: #FFFFFF;
+}
+.doctor_header .header button:hover{
+    background-color: #149f32;
+    color: #111111;
+}
+.doctor_header .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.doctor_header .user-info {
+    display: flex;
+    align-items: center;
+    margin: 0.5em 5em 0 0;
+    font-size: 1.2em;
+}
+.doctor_header .user-info img {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    margin-right: 1em;
+}
+
+
+.d_home_body{
+    margin: 2em 0 2em 0;
+    height: 34em;
+}
+.d_home_body .d_home_content{
+    display: flex;
+    width: 100%;
+}
+.d_home_body .d_home_content .left-section {
+    flex: 1;
+    padding: 3em 6em 3em 3em;
+    background-color: rgb(173, 245, 245);
+    height: 25em;
+}
+.d_home_body .d_home_content .left-section button{
+    font-size: 1.3em;
+    border-style: none;
+    border-radius: 0.5em;
+    margin: 1em 0 0 2.5em;
+    background-color: #31b302;
+    color: #FFFFFF;
+}
+.d_home_body .d_home_content .left-section .pb {
+    padding: 0.3em 2.34em;
+}
+.d_home_body .d_home_content .left-section .hb {
+    padding: 0.3em 3.6em;
+    background-color: #437B75;
+}
+.d_home_body .d_home_content .left-section .npb {
+    padding: 0.3em 2.21em;
+}
+.d_home_body .d_home_content .left-section .osb {
+    padding: 0.3em 1.6em;
+}
+.d_home_body .d_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}
+
+.d_home_body .d_home_content .right-section {
+    flex: 4;
+    padding: 2em;
+    margin-left: 0.5em;
+    background-color: #EEE9E9;
+    text-align: center;
+    font-size: 1.5em;
+}
+.d_home_body .d_home_content .right-section p{
+    padding-top: 3em;
+}
+
+/*patient Profile*/
+
+
+/* online session */
+.d_home_body .d_home_content .left-section .pbo {
+    padding: 0.3em 2.34em;
+}
+.d_home_body .d_home_content .left-section .hbo {
+    padding: 0.3em 3.25em;
+}
+.d_home_body .d_home_content .left-section .npbo {
+    padding: 0.3em 2.1em;
+}
+.d_home_body .d_home_content .left-section .osbo {
+    padding: 0.3em 1.7em;
+    background-color: #437B75;
+}
+.d_home_body .d_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}
+
+/* my patient */
+.d_home_body .d_home_content .left-section .pbp {
+    padding: 0.3em 3em;
+    background-color: #437B75;
+}
+.d_home_body .d_home_content .left-section .hbp {
+    padding: 0.3em 3.25em;
+}
+.d_home_body .d_home_content .left-section .npbp {
+    padding: 0.3em 2.1em;
+}
+.d_home_body .d_home_content .left-section .osbp {
+    padding: 0.3em 1.7em;
+}
+.d_home_body .d_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}
+
+/* new patient */
+.d_home_body .d_home_content .left-section .pbn {
+    padding: 0.3em 3em;
+}
+.d_home_body .d_home_content .left-section .hbn {
+    padding: 0.3em 3.25em;
+}
+.d_home_body .d_home_content .left-section .npbn {
+    padding: 0.3em 2.1em;
+    background-color: #437B75;
+}
+.d_home_body .d_home_content .left-section .osbn {
+    padding: 0.3em 1.7em;
+}
+.d_home_body .d_home_content .left-section button:hover{
+    background-color: #029b26;
+    color: #111111;
+}

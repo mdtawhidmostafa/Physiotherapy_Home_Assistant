@@ -1,0 +1,133 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body{height:55em;overflow: auto;}
+    .p_home_content{height:54em;}
+    .img_ex_my button{
+        padding:0.3em 1.5em 0.3em 1.5em;
+        font-size:1em;
+        border-radius: 0.2em;
+    }
+    .img_ex_my {
+        text-align:center;
+    }
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+    .p_home_body .p_home_content .left-section .back {
+        margin-top:3em;
+        padding: 0.3em 1em;
+    }
+    .img_ex_my button:hover{
+        background-color: #029b26;
+        color: white;
+    }
+    .up_video_sec_ex_v{
+        border:
+        
+    }
+    .up_video_sec_ex_v input{
+        font-size:1em;
+    }
+    .up_video_sec_ex select{
+        font-size:1em;
+    }
+</style>
+
+
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section" style="height:49.9em;">
+            <button class="hbe" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="ebe" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rbe" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="abe" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+            <button class="back" onclick="goBack()"><i class="fa fa-arrow-circle-left"></i> Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+        </div>
+        <div class="right-section">
+            <h1>Record your exercise</h1>
+            <div class="img_ex_my">
+                <form id="exerciseForm" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="rid" value="{{ rid }}">
+                    <div class="up_video_sec_ex">
+                        <label for="exercise" style="font-size:1.5em;margin-right:0.5em;">Select Exercise:</label>
+                        <select name="exercise" id="exercise">
+                            <option value="">Select Exercise option</option>
+                            {% for exercise in exercises %}
+                                <option value="{{ exercise.EID }}">{{ exercise.EName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+                    <div class="up_video_sec_ex">
+                        <label for="time" style="font-size:1.5em;margin-right:0.5em;">Select Time (30s to 2min):</label>
+                        <select name="time" id="time">
+                            <option value="30">30 seconds</option>
+                            <option value="60">1 minute</option>
+                            <option value="90">1.5 minutes</option>
+                            <option value="120">2 minutes</option>
+                        </select>
+                    </div>
+                    <br>
+                    <button type="button" onclick="redirectToNewPage()">
+                        See Model Video
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function redirectToNewPage() {
+                var exerciseSelect = document.getElementById('exercise');
+                var selectedExerciseId = exerciseSelect.options[exerciseSelect.selectedIndex].value;
+                var selectedRid = document.querySelector('input[name="rid"]').value;
+                var selectedTime = document.getElementById('time').value;
+        
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/patient/problem/exercise/video/record/camera/';
+        
+                var inputEid = document.createElement('input');
+                inputEid.type = 'hidden';
+                inputEid.name = 'eid';
+                inputEid.value = selectedExerciseId;
+        
+                var inputRid = document.createElement('input');
+                inputRid.type = 'hidden';
+                inputRid.name = 'rid';
+                inputRid.value = selectedRid;
+        
+                var inputTime = document.createElement('input');
+                inputTime.type = 'hidden';
+                inputTime.name = 'time';
+                inputTime.value = selectedTime;
+        
+                var csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = 'csrfmiddlewaretoken';
+                csrfToken.value = '{{ csrf_token }}';
+        
+                form.appendChild(inputEid);
+                form.appendChild(inputRid);
+                form.appendChild(inputTime);
+                form.appendChild(csrfToken);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        </script>
+    </div>
+</section>
+
+
+{% include "Footer_patient.html" %}

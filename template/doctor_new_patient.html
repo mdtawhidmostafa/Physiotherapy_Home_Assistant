@@ -1,0 +1,137 @@
+{% include "Header_doctor.html" %}
+<style>
+    .d_home_body{
+        height:50em;
+        overflow: auto;
+    }
+    .d_home_body .d_home_content .left-section{
+        height:43.7em;
+    }
+    .d_home_body .d_home_content .left-section .pbn {
+        padding: 0.3em 2.34em;
+    }
+    .d_home_body .d_home_content .left-section .hbn {
+        padding: 0.3em 3.6em;
+    }
+    .d_home_body .d_home_content .left-section .npbn {
+        padding: 0.3em 2.21em;
+        background-color: #437B75;
+    }
+    .d_home_body .d_home_content .left-section .osbn {
+        padding: 0.3em 1.6em;
+    }
+    .d_home_body .d_home_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    .d_home_body .d_home_content .right-section button {
+        padding: 0.3em 1.6em;
+        font-size:1em;
+        border-radius:5em;
+        color:blue;
+        background-color:rgb(173, 245, 245);
+    }
+    .d_home_body .d_home_content .right-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    .horizontal_group_np {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size:1em;
+    }
+    
+    .form-group-np {
+        margin-bottom: 1em;
+        font-size:1.2em;
+        margin-left:1em;
+    }
+    .form-group-np input {
+        font-size:0.8em;
+        padding:0 0 0 1em;
+    }
+    .email_np{
+        text-align:left;
+    }
+    .chackbox_np label{
+    }
+    .chackbox_np input{
+        margin:0.4em 0.7em 0 7em;
+    }
+    .chackbox_np {
+        text-align:left;
+    }
+    
+</style>
+<section class="d_home_body">
+    <div class="d_home_content">
+        <div class="left-section">
+            <button class="hbn" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pbn" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npbn" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osbn" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+        </div>
+        <div class="right-section">
+            {% if not show_message %}
+                <h1>New Patient Registration</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="horizontal_group_np">
+                        <div class="form-group-np">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" id="name" placeholder="Patient Name" required pattern="[A-Za-z. ]{1,25}" maxlength="25" style="width:10em;">
+                        </div>
+                        <div class="form-group-np">
+                            <label for="contact_no">Phone No:</label>
+                            <input type="tel" name="contact_no" id="contact_no" pattern="[0-9]*" maxlength="11" placeholder="Enter Phone No." style="width:8em;" required>
+                        </div>
+                        <div class="form-group-np">
+                            <label for="age">Age:</label>
+                            <input type="number" id="age" name="age" style="width:3em;" placeholder="Age">
+                        </div>
+                    </div>
+                    <div class="horizontal_group_np">
+                        
+                        <div class="form-group-np">
+                            <label for="disease">Disease :</label>
+                            <input type="text" name="disease" id="disease" placeholder="Disease Name" required pattern="[A-Za-z0-9\s.]{1,25}" maxlength="25">
+                        </div>
+                        <div class="form-group-np">
+                            <label for="category">Catagory of Disease:</label>
+                            <select name="category" id="category" style="font-size: 0.7em;" required>
+                                <option value="">Select Exercise</option>
+                                {% for item in table2_data %}
+                                    <option value="{{ item.DeID }}">{{ item.DName }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group-np email_np">
+                        <label for="email">Email Address:</label>
+                        <input type="email" name="email" id="email" placeholder="Enter Email" required maxlength="35" style="width:25em;">
+                    </div>
+                    <div class="form-group-np chackbox_np">
+                        <label for="EName">Exercise Name:</label><br>
+                        {% for item in table1_data %}
+                            <input type="checkbox" id="{{ item.EID }}" name="EName" value="{{ item.EID }}">
+                            <label for="{{ item.EID }}">{{ item.EName }}</label><br>
+                        {% endfor %}
+                    </div>
+                    <button type="submit">Create Patient</button>
+                </form>
+            {% endif %}
+            {% if show_message %}
+                <div>
+                    <p>Hello doctor, {{ user_name }}  please wait (12/24 hours).<br>
+                        Our admin panel will contact you and verify, then you can add patients, view patient reports.<br>
+                        Thank you for adding our Virtual Physiotherapy Home Assistant System.<br>
+                        We apologize for putting you on hold for some time.<br>
+                        Please stay with us....<br>
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

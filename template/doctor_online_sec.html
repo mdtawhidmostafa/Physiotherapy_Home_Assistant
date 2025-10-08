@@ -1,0 +1,36 @@
+{% include "Header_doctor.html" %}
+<style>
+    .d_home_body .d_home_content .left-section .pbo {
+        padding: 0.3em 2.34em;
+    }
+    .d_home_body .d_home_content .left-section .hbo {
+        padding: 0.3em 3.6em;
+    }
+    .d_home_body .d_home_content .left-section .npbo {
+        padding: 0.3em 2.21em;
+    }
+    .d_home_body .d_home_content .left-section .osbo {
+        padding: 0.3em 1.6em;
+        background-color: #437B75;
+    }
+    .d_home_body .d_home_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+</style>
+<section class="d_home_body">
+    <div class="d_home_content">
+        <div class="left-section">
+            <button class="hbo" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pbo" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npbo" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osbo" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+        </div>
+        <div class="right-section">
+            <p>Hello Mr. {{ user_name }}, Welcome to our virtual Physiotherapy Home Assistant system.<br><br>
+                This is  Online Session page <br>
+            </p>
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

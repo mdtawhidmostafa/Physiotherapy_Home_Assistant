@@ -1,0 +1,56 @@
+{% include "Header_admin.html"%}
+<style>
+    .a_home_body{overflow: auto;}
+    
+    .a_home_body .a_home_content .left-section .hbr {
+        padding: 1em 7em;
+        background-color: #437B75;
+    }
+    .a_home_body .a_home_content .left-section .dl {
+        padding: 1em 3.2em;
+    }
+    .a_home_body .a_home_content .left-section .pl {
+        padding: 1em 5em;
+    }
+    .a_home_body .a_home_content .left-section .cel {
+        padding: 1em 5.6em;
+    }
+    .a_home_body .a_home_content .left-section .ccd {
+        padding: 1em 3.9em; 
+    }
+    .a_home_body .a_home_content .left-section .cec {
+        padding: 1em 2.3em;
+    }
+    .a_home_body .a_home_content .left-section .nac {
+        padding: 1em 5.2em;
+    }
+    
+</style>
+<section class="a_home_body">
+    <div class="a_home_content">
+        <div>
+            {% if error %}
+                    <div class="error-message" style="text-align: center;font-size: 1.8em;background-color: rgb(248, 8, 8);color: #ffffff;">{{ error }}</div>
+            {% endif %}
+            {% if success %}
+                <div class="success-message" style="text-align: center;font-size: 1.8em;background-color: rgb(4, 143, 4);color: #ffffff;">{{ success }}</div>
+            {% endif %}
+        </div>
+        <div class="left-section"style="padding: 3em 6em 16em 3em;">
+            <button class="hbr" onclick="window.location.href = '{% url 'admins' %}';"> Home </button>
+            <button class="dl" onclick="window.location.href = '{% url 'A_doctor' %}';">List of Physiotherapists</button>
+            <button class="pl" onclick="window.location.href = '{% url 'A_p_list' %}';">List of Patients</button>
+            <button class="cel" onclick="window.location.href = '{% url 'a_exercise_db' %}';">Exercise List</button>
+            <button class="ccd" onclick="window.location.href = '{% url 'a_category_db' %}';">Category of disease</button>
+            <!--<button class="cec" onclick="window.location.href = '{% url 'check_exercise' %}';">Check Exercise Completion</button>-->
+            <button class="nac" onclick="window.location.href = '{% url 'a_db' %}';">Admin Panels</button>
+        </div>
+        <div class="right-section">
+            <p>Hello Mr. {{ user_name }}, Welcome to our virtual Physiotherapy Home Assistant system.<br><br>
+                By using this system you will be able to track your exercise accuracy, posture accuracy and activity.<br>
+                And your doctor can see your detail report.<br>
+            </p>
+        </div>
+    </div>
+</section>
+{% include "Footer.html" %}

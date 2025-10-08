@@ -1,0 +1,17 @@
+{% include "Header.html"%}
+<section class="s1body">
+    <img src="/static/images/01.jpg">
+    <div class="cont">
+        <h3 style="font-size: 1.5em;">Are you the Patient or the Physiotherapist?<br>Please select the option : </h3>
+    </div>
+    <div class="usdb" style="background-color: #F8F1F1;">
+         <ul>
+            <li><img src="/static/images/icon/01.png"><button class="pp" onclick="window.location.href = '{% url 'patient' %}';">Patient</button>
+            </li>
+            <li><img src="/static/images/icon/02.png"><button class="pd" onclick="window.location.href = '{% url 'doctor' %}';">Physiotherapist</button>
+            </li>
+         </ul>
+    </div>
+</section>
+
+{% include "Footer.html" %}

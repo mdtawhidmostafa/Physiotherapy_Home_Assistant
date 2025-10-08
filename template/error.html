@@ -1,0 +1,10 @@
+{% include "Header.html"%}
+<div>
+    {% if error %}
+            <div class="error-message" style="text-align: center;font-size: 1.8em;background-color: rgb(248, 8, 8);color: #ffffff;">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+        <div class="success-message" style="text-align: center;font-size: 1.8em;background-color: rgb(4, 143, 4);color: #ffffff;">{{ success }}</div>
+    {% endif %}
+</div>
+{% include "Footer.html" %}

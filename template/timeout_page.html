@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Score</title>
+</head>
+<body>
+    <h1>Predicted Score</h1>
+    <p>Score: {{ score }}</p>
+    <video width="320" height="240" controls>
+        <source src="{{ video_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <br>
+    <a href="{% url 'upload_video' %}">Upload another video</a>
+</body>
+</html>

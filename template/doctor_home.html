@@ -1,0 +1,18 @@
+{% include "Header_doctor.html" %}
+<section class="d_home_body">
+    <div class="d_home_content">
+        <div class="left-section">
+            <button class="hb" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pb" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npb" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osb" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+        </div>
+        <div class="right-section">
+            <p>Hello Mr. {{ user_name }}, Welcome to our virtual Physiotherapy Home Assistant system.<br><br>
+                By using this system you will be able to track your exercise accuracy, posture accuracy and activity.<br>
+                And your doctor can see your detail report.<br>
+            </p>
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

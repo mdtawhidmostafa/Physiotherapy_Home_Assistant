@@ -1,0 +1,99 @@
+{% include "HeaderPL.html"%}
+<section class="formimg">
+    <img src="/static/images/06.jpg" alt="image loading....">
+    <div>
+        {% if error %}
+                <div class="error-message" style="text-align: center;font-size: 1.8em;background-color: rgb(248, 8, 8);color: #ffffff;">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="success-message" style="text-align: center;font-size: 1.8em;background-color: rgb(4, 143, 4);color: #ffffff;">{{ success }}</div>
+        {% endif %}
+    </div>
+</section>
+<section class="formbody">
+    <div class="formcont">
+        <img src="\static\images\icon\01.png" alt="Profile Picture" class="profile-picture">
+        <form action="#" method="post">
+            {% csrf_token %}
+            <h2>Fill your details</h2>
+            <div class="horizontal">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name" id="first_name" placeholder="First Name" required maxlength="25" pattern="[A-Za-z. ]{1,25}">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" name="last_name" id="last_name" placeholder="Last Name" required maxlength="25" pattern="[A-Za-z. ]{1,25}">
+                </div>
+            </div>
+            <div class="horizontal">
+                <div class="form-group">
+                    <label for="username">User Name:</label>
+                    <input type="text" name="username" id="username" placeholder="User Name" required maxlength="25">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" name="email" id="email" placeholder="Enter Email" required maxlength="35">
+                </div>
+            </div>
+            <div class="horizontal">
+                <div class="form-group">
+                    <label for="contact_no">Contact No:</label>
+                    <input type="tel" name="contact_no" id="contact_no" pattern="[0-9]*" maxlength="11" placeholder="Enter Contact Number"required>
+                </div>
+                <div class="form-group">
+                    <label for="emergency_contact">Emergency Contact No:</label>
+                    <input type="tel" name="emergency_contact" id="emergency_contact" pattern="[0-9]*" maxlength="11" placeholder="Emergency Contact">
+                </div>
+            </div>
+            <div class="horizontal">
+                <div class="form-group">
+                    <label for="division">Division:</label>
+                    <select name="division" id="division" onchange="updateDistricts()" style="width:10em;font-size:1em;">
+                        <option value="">Select Division</option>
+                        <option value="dhaka">Dhaka</option>
+                        <option value="rajshahi">Rajshahi</option>
+                        <option value="chittagong">Chittagong</option>
+                        <option value="barisal">Barisal</option>
+                        <option value="khulna">Khulna</option>
+                        <option value="mymensingh">Mymensingh</option>
+                        <option value="rangpur">Rangpur</option>
+                        <option value="sylhet">Sylhet</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="district">District:</label>
+                    <select name="district" id="district" required style="width:10em;font-size:1em;">
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+                <script src="/static/js/division.js"></script> 
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select name="gender" id="gender" required style="width:10em;font-size:1em;">
+                    <option value="">Select gender</option>
+                    <option value="male"> Male </option>
+                    <option value="female"> Female </option>
+                    </select>
+                </div>
+            </div>  
+            <div class="horizontal" style="margin:1em 0 0 0;">
+                <div class="form-group">
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" id="password" placeholder="Enter password" required maxlength="30">
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" name="Confirm_password" id="confirm_password" placeholder="Confirm Password" required maxlength="30">
+                </div>
+                <script src="/static/js/passwordCheck.js"> </script>
+            </div>         
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea name="address" id="address" rows="1" required placeholder="Home Address"></textarea>
+            </div>
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+</section>
+{% include "Footer.html" %}

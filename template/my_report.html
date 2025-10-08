@@ -1,0 +1,132 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body{overflow: auto;}
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+    .right-section table, td, th {  
+        border: 0.1em solid #50545c;
+        text-align: center;
+      }
+    .right-section h1{margin:-0.2em 0 0.5em 0;}  
+    .right-section table {
+        border-collapse: collapse;
+        width: 100%; 
+      }
+      
+    .right-section th, td {
+        padding: 5px;
+      }
+    .right-section td button{
+        padding: 0.2em 1em;
+        background-color: #CA5858;
+        color: white;
+        font-size: 0.7em;
+        border-radius: 0.9em;
+    }
+    .right-section td button:hover{
+        background-color: #149f32;
+        color: #111111;
+    }
+</style>
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section">
+            <button class="hbr" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="ebr" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rbr" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="abr" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+        </div>
+        <div class="right-section">
+            {% if messages %}
+                <div class="alert alert-success" style="margin:-1.95em 0 0 0;background-color: #029b26;color: white;font-size:1.2em;padding:0.5em;">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <h1> Reports </h1>
+            {% if report_list %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exercise Name</th>
+                            <th>Result</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Duration</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in report_list|dictsortreversed:"date" %}
+                            <tr>
+                                <td>{{ item.exname }}</td>
+                                <td>{{ item.result }}</td>
+                                <td>{{ item.date }}</td>
+                                <td>{{ item.time }}</td>
+                                <td>{{ item.dura }}</td>
+                                <td><button onclick="redirectToNewPage('{{ item.eid }}', '{{ item.rid }}', '{{ item.result }}', '{{ item.dura }}')">Delete</button></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <script>
+                        function redirectToNewPage(eid, rid, result, dates) {
+                            var form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = '/patient/report/delet/';
+                        
+                            var inputEid = document.createElement('input');
+                            inputEid.type = 'hidden';
+                            inputEid.name = 'eid';
+                            inputEid.value = eid;
+                        
+                            var inputRid = document.createElement('input');
+                            inputRid.type = 'hidden';
+                            inputRid.name = 'rid';
+                            inputRid.value = rid;
+                        
+                            var inputResult = document.createElement('input');
+                            inputResult.type = 'hidden';
+                            inputResult.name = 'result';
+                            inputResult.value = result;
+                        
+                            var inputDates = document.createElement('input');
+                            inputDates.type = 'hidden';
+                            inputDates.name = 'dates';
+                            inputDates.value = dates;
+                        
+                            var csrfToken = document.createElement('input');
+                            csrfToken.type = 'hidden';
+                            csrfToken.name = 'csrfmiddlewaretoken';
+                            csrfToken.value = '{{ csrf_token }}';
+                        
+                            form.appendChild(inputEid);
+                            form.appendChild(inputRid);
+                            form.appendChild(inputResult);
+                            form.appendChild(inputDates);
+                            form.appendChild(csrfToken);
+                        
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                        
+                        </script>
+                </table>
+            {% endif %}
+            {% if show_message %}
+                <div>
+                    <p>Please consult with a physiotherapist doctor.<br>
+                    After that you can start the exercise using your<br>
+                    <a href="{% url 'patient_addrid' %}" style="text-decoration:none;"><b style="color: #960e0e;">Prescription</a></b> or <a href="{% url 'patient_addrid' %}"style="text-decoration:none;"><b style="color: #960e0e;">Ref ID</b></a>.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}

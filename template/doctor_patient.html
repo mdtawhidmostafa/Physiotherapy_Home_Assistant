@@ -1,0 +1,171 @@
+{% include "Header_doctor.html" %}
+<style>
+    .d_home_body{height:35em;overflow: auto;}
+    .d_home_body .d_home_content .left-section .pbp {
+        padding: 0.3em 2.34em;
+        background-color: #437B75;
+    }
+    .d_home_body .d_home_content .left-section .hbp {
+        padding: 0.3em 3.6em;
+    }
+    .d_home_body .d_home_content .left-section .npbp {
+        padding: 0.3em 2.21em;
+    }
+    .d_home_body .d_home_content .left-section .osbp {
+        padding: 0.3em 1.6em;
+    }
+    .d_home_body .d_home_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    .d_home_body .d_home_content .right-section{
+        text-align:center;
+    }
+    .right-section table, td, th {  
+        border: 0.1em solid #50545c;
+        text-align: center;
+      }
+    .myp_table td, th {  
+        padding: 5px;
+
+      }
+      
+    .myp_table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+    .right-section td button{
+        padding: 0.2em 0.5em;
+        background-color: #5926f0;
+        color: white;
+        font-size: 0.7em;
+        border-radius: 0.9em;
+    }
+    .right-section td button:hover{
+        background-color: #149f32;
+        color: #111111;
+    }
+    .badge {
+        background-color: red;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 50%;
+        font-size: 12px;
+      }
+      
+</style>
+<div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}" style="text-align: center; font-size: 1.8em; color: #ffffff; background-color: {% if message.tags == 'error' %}rgb(248, 8, 8){% elif message.tags == 'success' %}rgb(4, 143, 4){% endif %};">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<section class="d_home_body">
+    <div class="d_home_content">
+        <div class="left-section">
+            <button class="hbp" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pbp" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npbp" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osbp" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+        </div>
+        <div class="right-section">
+            {% if not show_message %}
+                <h1>Patients List</h1>
+                <table class="myp_table">
+                    <thead>
+                        <tr>
+                            <th>RID Number </th>
+                            <th>Patient Name</th>
+                            <th>Age</th>
+                            <th>Disease</th>
+                            <th>Contact No</th>
+                            <th>Email</th>
+                            <th>Result</th>
+                            <th>Report</th>
+                            <!--<th>Notice</th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in patient_data %}
+                        <tr>
+                            <td>{{ item.patient.RID }}</td>
+                            <td>{{ item.patient.PName }}</td>
+                            <td>{{ item.patient.PAge }}</td>
+                            <td>{{ item.patient.PDisease }}</td>
+                            <td>{{ item.patient.PPhone }}</td>
+                            <td>{{ item.patient.PEmail }}</td>
+                            <td>{{ item.average_result}}</td>
+                            <td><button onclick="redirectToNewPage('{{ item.patient.RID }}')">See Report</button></td>
+                            <!--<td><button onclick="redirectToNotice('{{ item.patient.RID }}')">Notice History<span class="badge">{{ item.new_messages_count }}</span></button></td>-->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <script>
+                        function redirectToNewPage(rid) {
+                            var form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = '/doctor/patient/report/';
+                            
+                            var inputRid = document.createElement('input');
+                            inputRid.type = 'hidden';
+                            inputRid.name = 'rid';
+                            inputRid.value = rid;
+                            
+                            var csrfToken = document.createElement('input');
+                            csrfToken.type = 'hidden';
+                            csrfToken.name = 'csrfmiddlewaretoken';
+                            csrfToken.value = '{{ csrf_token }}';
+                    
+                            form.appendChild(inputRid);
+                            form.appendChild(csrfToken);
+                            
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                        function redirectToNotice(rid) {
+                            var form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = '/doctor/patient/notice/';
+                            
+                            var inputRid = document.createElement('input');
+                            inputRid.type = 'hidden';
+                            inputRid.name = 'rid';
+                            inputRid.value = rid;
+                            
+                            var csrfToken = document.createElement('input');
+                            csrfToken.type = 'hidden';
+                            csrfToken.name = 'csrfmiddlewaretoken';
+                            csrfToken.value = '{{ csrf_token }}';
+                        
+                            var markRead = document.createElement('input');
+                            markRead.type = 'hidden';
+                            markRead.name = 'mark_read';
+                            markRead.value = 'true';
+                        
+                            form.appendChild(inputRid);
+                            form.appendChild(csrfToken);
+                            form.appendChild(markRead);
+                            
+                            document.body.appendChild(form);
+                            form.submit();
+                        }
+                    </script>
+                </table>
+            {% endif %}
+            {% if show_message %}
+                <div>
+                    <p>Hello doctor, {{ user_name }}  please wait (12/24 hours).<br>
+                        Our admin panel will contact you and verify, then you can add patients, view patient reports.<br>
+                        Thank you for adding our Virtual Physiotherapy Home Assistant System.<br>
+                        We apologize for putting you on hold for some time.<br>
+                        Please stay with us....<br>
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

@@ -1,0 +1,60 @@
+{% include "HeaderOTP.html"%}
+<section class="photo_section">
+    <img src="/static/images/05.jpg" alt="image loading....">
+    <div class="hovtex">
+        <h3>Let`s make your life happier</h3>
+        <h1>Healthy Living</h1>
+    </div>
+    <div>
+        {% if error %}
+                <div class="error-message" style="text-align: center;font-size: 1.8em;background-color: rgb(248, 8, 8);color: #ffffff;">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="success-message" style="text-align: center;font-size: 1.8em;background-color: rgb(4, 143, 4);color: #ffffff;">{{ success }}</div>
+        {% endif %}
+    </div>
+    
+</section>
+<section class="ppbody" style="width: 30em;text-align: center;margin-left: 35%;">
+    <h1 style="font-size: 1.9em;">Verify Your Email Account</h1>
+    <div id="countdown-message" style="font-size: 1.2em; margin-bottom: 0.5em;">This page will expire in: <span id="countdown">01:00</span></div>
+    <div class="ppcont" style="background-color: #EEE9E9;padding: 1em;">
+        <form action="#" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="OTP" style="font-size: 1.2em;padding: 0.3em;">Enter the OTP code we have sent on your contact no</label>
+                <input type="text" name="OTP" id="OTP" placeholder="OTP Code" required pattern="[0-9]*" maxlength="6" style="font-size: 1.3em;text-align: center;padding: 0.2em;margin: 0.3em;">
+            </div>
+            
+            <button type="submit" style="text-decoration: none;font-size: 1.5em;padding: 0.5em 1em;background-color: #58CABC;color: #FFFFFF;padding: 0.6% 9%;margin: 0.3em 0.5em;"onmouseover="this.style.backgroundColor='#149f32';"onmouseout="this.style.backgroundColor='#58CABC';">Verify Account</button>
+        </form>
+        <form method="GET" action="{% url 'doctor_otp' %}">
+            {% csrf_token %}
+            <input type="submit" name="resend_otp" value="Resend OTP" style="font-size: 1em;padding: 0 1em 0 1em;margin: 1.5em 0 0.5em 0;">
+        </form>
+    </div>
+</section>
+<script>
+    const countdownDisplay = document.getElementById('countdown');
+  
+    let countdownTime = 60;
+  
+    const updateCountdown = () => {
+      const minutes = Math.floor(countdownTime / 60);
+      const seconds = countdownTime % 60;
+      countdownDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      countdownTime--;
+    }
+  
+    updateCountdown();
+    const intervalId = setInterval(updateCountdown, 1000);
+  
+    countdownDisplay.addEventListener('DOMSubtreeModified', () => {
+      if (countdownTime === 0) {
+        clearInterval(intervalId);
+        window.location.href = "/doctorSignUp/";
+      }
+    });
+  </script>
+
+{% include "Footer.html" %}

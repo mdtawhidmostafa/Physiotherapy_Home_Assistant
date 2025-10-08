@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exercise Notifications</title>
+</head>
+<body>
+    <h1>Exercise Notifications</h1>
+    <ul>
+        {% for notification in notifications %}
+            <li>{{ notification.message }} - {{ notification.created_at }}</li>
+        {% endfor %}
+    </ul>
+    <button id="checkExerciseButton">Check Exercise Completion</button>
+
+    <script>
+        document.getElementById("checkExerciseButton").addEventListener("click", function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/check_exercise_completion/");
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // Request was successful, you can handle the response if needed
+                    console.log(xhr.responseText);
+                    alert("Exercise check complete");
+                } else {
+                    // Request failed
+                    console.error(xhr.statusText);
+                    alert("Failed to check exercise completion");
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>

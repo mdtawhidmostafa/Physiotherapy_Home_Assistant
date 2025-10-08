@@ -1,0 +1,185 @@
+{% include "Header_doctor.html" %}
+<style>
+    .admin_profile_body{
+        margin: 2em 0 2em 0;
+        height: 40em;
+        overflow: auto;
+    }
+    .admin_profile_body .admin_profile_content{
+        display: flex;
+        width: 100%;
+    }
+    .admin_profile_body .admin_profile_content .left-section {
+        flex: 2;
+        padding: 3em 5em 3em 3em;
+        background-color: rgb(173, 245, 245);
+        height: 25em;
+    }
+    .admin_profile_body .admin_profile_content .left-section button{
+        font-size: 1.3em;
+        border-style: none;
+        border-radius: 0.5em;
+        margin: 1em 0 0 2.1em;
+        background-color: #31b302;
+        color: #FFFFFF;
+    }
+    .admin_profile_body .admin_profile_content .left-section .hbr {
+        padding: 1em 7em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .dl {
+        padding: 1em 3.3em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .pl {
+        padding: 1em 5.1em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .cel {
+        padding: 1em 5.6em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .ccd {
+        padding: 1em 4.1em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .cec {
+        padding: 1em 2.5em;
+    }
+    .admin_profile_body .admin_profile_content .left-section .nac {
+        padding: 1em 5.4em;
+    }
+    .admin_profile_body .admin_profile_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111; 
+    }
+    
+    .admin_profile_body .admin_profile_content .right-section {
+        flex: 5;
+        padding: 1em;
+        margin-left: 0.5em;
+        background-color: #EEE9E9;
+        text-align: center;
+        font-size: 1.5em;
+    }
+    .admin_profile_body .admin_profile_content .right-section h2{
+        margin-top:2em;
+    }
+    .admin_profile_body .admin_profile_content .right-section img{
+        height:4.5em;
+        width:4.5em;
+        margin-top:-0.8em;
+    }
+    .admin_profile_body .admin_profile_content .right-section input{
+        font-size:1em;
+        padding: 0 1em 0 1em;
+        margin:0.3em;
+    }
+    .profile_section1 input{
+        width:7em;
+        text-align:center;
+    }
+    .profile_section2 input{
+        width:6.5em;
+        text-align:center;
+    }
+    .profile_section2 input[type="email"]{
+        width:11.5em;
+        text-align:center;
+        padding:-1em;
+    }
+    .profile_section1,
+    .profile_section2 {
+        display: inline-block;
+        vertical-align: top; 
+    }
+
+    .profile_section1 {
+        width: calc(47.33% - 2em);
+        text-align: left;
+    }
+
+    .profile_section2 {
+        width: calc(53.66% - 2em);
+        text-align: left;
+    }
+
+    .a_delete button{
+        padding: 0 1em 0 1em;
+        font-size: 0.9em;
+        background-color: red;
+        color: white;
+        border-radius: 5em;
+        margin:0.7em;
+    }
+    .a_delete button:hover {
+        background-color: #029b26;
+        color: #111111;
+
+    }
+    input[type="submit"]{
+        width:9em;
+        text-align:center;
+        padding:-1em;
+        border-radius: 0.5em;
+    }
+    input[type="submit"]:hover{
+        background-color: #029b26;
+        color: white;
+    }
+</style>
+
+<section class="admin_profile_body">
+    <div class="admin_profile_content">
+        <div class="left-section"style="padding: 3em 6em 23em 3em;">
+            <button class="hbr" onclick="window.location.href = '{% url 'admins' %}';"> Home </button>
+            <button class="dl" onclick="window.location.href = '{% url 'A_doctor' %}';">List of Physiotherapists</button>
+            <button class="pl" onclick="window.location.href = '{% url 'A_p_list' %}';">List of Patients</button>
+            <button class="cel" onclick="window.location.href = '{% url 'a_exercise_db' %}';">Exercise List</button>
+            <button class="ccd" onclick="window.location.href = '{% url 'a_category_db' %}';">Category of disease</button>
+            <!--<button class="cec" onclick="window.location.href = '{% url 'check_exercise' %}';">Check Exercise Completion</button>-->
+            <button class="nac" onclick="window.location.href = '{% url 'a_db' %}';">Admin Panels</button>
+        </div>
+        <div class="right-section">
+            {% if user %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{% if message.tags %}alert alert-{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            <h2>Welcome, {{ user_fname }} {{ user_lname }}</h2>
+            <img src="{{ user_photo }}" alt="User Photo">
+            <form method="post" action="{% url 'update_admin' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="profile_section4">
+                    <label for="photo">Profile Photo:</label>
+                    <input type="file" id="photo" name="photo">
+                </div>
+                <div class="profile_section1">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user_fname }}" maxlength="25"><br>
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user_lname }}" maxlength="25"><br>
+                    <label for="title">Category:</label>
+                    <input style="width:5em;" type="text" id="title" name="title" value="{{ user_category }}" maxlength="15" readonly><br>
+                </div>
+                <div class="profile_section2">
+                    <label for="gender">Gender:</label>
+                    <input style="width:3em;" type="text" id="gender" name="gender" value="{{ user_gender }}" readonly><br>
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" value="{{ user_email }}" readonly><br>
+                    <label for="contact_no">Phone Number:</label>
+                    <input type="text" id="contact_no" name="contact_no" value="{{ user_contact }}" readonly><br>
+                </div>
+                <input type="submit" value="Save">
+            </form>
+            <div class="a_delete">
+                <form method="post" action="{% url 'delete_dector' %}">
+                    {% csrf_token %}
+                    <button type="submit" id="delete-profile-btn">Delete Profile</button>
+                </form>
+            </div>
+            {% else %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

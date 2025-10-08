@@ -1,0 +1,48 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+    .home_img{
+        width:50em;
+        height:20em;
+        margin:-2em 0 0 0;
+    }
+    .homepp{
+        margin:-16.5em 0 0 0;font-size:1em;
+    }
+</style>
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section">
+            <button class="hb" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="eb" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rb" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="ab" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+        </div>
+        <div class="right-section">
+            {% if after_message %}
+                <div>
+                    <img src="/static/images/04.png" class="home_img">
+                    <p class="homepp">Hello {{ user_name }},<br>Welcome to our virtual Physiotherapy Home Assistant system.<br>
+                        By using this systemyou will be able totrack your exercise accuracy,posture accuracy and activity.<br>
+                        And your doctor can see your detail report.</p>
+                    </div>
+            {% endif %}
+            {% if show_message %}
+                <div>
+                    <p>Hello Mr. {{ user_name }}, Welcome to our virtual Physiotherapy Home Assistant system.<br><br>
+                        By using this system you will be able to track your exercise accuracy, posture accuracy and activity.<br>
+                        And your doctor can see your detail report.<br>
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}

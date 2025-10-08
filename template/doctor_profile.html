@@ -1,0 +1,181 @@
+{% include "Header_doctor.html" %}
+<style>
+    .doctor_profile_body{
+        margin: 2em 0 2em 0;
+        height: 44em;
+        overflow: auto;
+    }
+    .doctor_profile_body .doctor_profile_content{
+        display: flex;
+        width: 100%;
+    }
+    .doctor_profile_body .doctor_profile_content .left-section {
+        flex: 1;
+        padding: 3em 5em 3em 3em;
+        background-color: rgb(173, 245, 245);
+        height: 37em;
+    }
+    .doctor_profile_body .doctor_profile_content .left-section button{
+        font-size: 1.3em;
+        border-style: none;
+        border-radius: 0.5em;
+        margin: 1em 0 0 2.1em;
+        background-color: #31b302;
+        color: #FFFFFF;
+    }
+    .doctor_profile_body .doctor_profile_content .left-section .pb {
+        padding: 0.3em 2em;
+    }
+    .doctor_profile_body .doctor_profile_content .left-section .hb {
+        padding: 0.3em 4em;
+        background-color: #437B75;
+    }
+    .doctor_profile_body .doctor_profile_content .left-section .npb {
+        padding: 0.3em 1.9em;
+    }
+    .doctor_profile_body .doctor_profile_content .left-section .osb {
+        padding: 0.3em 1.2em;
+    }
+    .doctor_profile_body .doctor_profile_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    
+    .doctor_profile_body .doctor_profile_content .right-section {
+        flex: 5;
+        padding: 1em;
+        margin-left: 0.5em;
+        background-color: #EEE9E9;
+        text-align: center;
+        font-size: 1.5em;
+    }
+    .doctor_profile_body .doctor_profile_content .right-section h2{
+        margin-top:0.05em;
+    }
+    .doctor_profile_body .doctor_profile_content .right-section img{
+        height:4.5em;
+        width:4.5em;
+        margin-top:-0.8em;
+    }
+    .doctor_profile_body .doctor_profile_content .right-section input{
+        font-size:1em;
+        padding: 0 1em 0 1em;
+        margin:0.3em;
+    }
+    .profile_section1 input{
+        width:7em;
+        text-align:center;
+    }
+    .profile_section2 input{
+        width:6.5em;
+        text-align:center;
+    }
+    .profile_section2 input[type="email"]{
+        width:11.5em;
+        text-align:center;
+        padding:-1em;
+    }
+    .profile_section3 textarea{
+        width:35em;
+        text-align:center;
+        font-size:1em;
+    }
+    .profile_section1,
+    .profile_section2,
+    .profile_section3 {
+        display: inline-block;
+        vertical-align: top; 
+    }
+
+    .profile_section1 {
+        width: calc(47.33% - 2em);
+        text-align: left;
+    }
+
+    .profile_section2 {
+        width: calc(53.66% - 2em);
+        text-align: left;
+    }
+
+    .profile_section3 {
+        clear: both;
+        width: 100%;
+    }
+    .p_delete button:hover {
+        background-color: #029b26;
+        color: #111111;
+
+    }
+</style>
+
+<section class="doctor_profile_body">
+    <div class="doctor_profile_content">
+        <div class="left-section">
+            <button style="background-color: #31b302;padding: 0.3em 3.25em;" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pb" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npb" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osb" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+        </div>
+        <div class="right-section">
+            {% if user %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{% if message.tags %}alert alert-{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            <h2>Welcome, {{ user_fname }} {{ user_lname }}</h2>
+            <img src="{{ user_photo }}" alt="User Photo">
+            <form method="post" action="{% url 'update_doctor' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="profile_section4">
+                    <label for="photo">Profile Photo:</label>
+                    <input type="file" id="photo" name="photo">
+                </div>
+                <div class="profile_section1">
+                    <label for="title">title:</label>
+                    <input style="width:10em;" type="text" id="title" name="title" value="{{ user_title }}" maxlength="15" placeholder="Dr./Prof.Dr./Assoc.Prof.Dr./Asst.Prof.Dr."><br>
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user_fname }}" maxlength="25"><br>
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user_lname }}" maxlength="25"><br>
+                    <label for="emergency_contact">Emergency Phone:</label>
+                    <input type="text" id="emergency_contact" name="emergency_contact" value="{{ user_econtact }}" pattern="[0-9]*" maxlength="11"><br>
+                    <label for="division">Division:</label>
+                    <input type="text" id="division" name="division" value="{{ user_div }}" maxlength="15" pattern="[A-Za-z]{5,11}"><br>
+                    <label for="district">District:</label>
+                    <input type="text" id="district" name="district" value="{{ user_dis }}" maxlength="25" pattern="[A-Za-z.'']{4,16}"><br>
+                </div>
+                <div class="profile_section2">
+                    <label for="gender">Gender:</label>
+                    <input style="width:3em;" type="text" id="gender" name="gender" value="{{ user_gender }}" readonly><br>
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" value="{{ user_email }}" readonly ><br>
+                    <label for="contact_no">Phone Number:</label>
+                    <input type="text" id="contact_no" name="contact_no" value="{{ user_contact }}" readonly><br>
+                    <label for="contact_no">NID/Passport:</label>
+                    <input type="text" id="contact_no" name="contact_no" value="{{ user_nidp }}" readonly><br>
+                    <label for="contact_no">BPA/BRC Number:</label>
+                    <input type="text" id="contact_no" name="contact_no" value="{{ user_bpa }}" readonly><br>
+                    <label for="contact_no">Address:</label>
+                    <input type="text" id="address" name="address" value="{{ user_address }}" maxlength="100" style="width:65%;text-align: center;"><br>
+                    
+                </div>
+                <div class="profile_section3">
+                    <label for="ch_name">Chamber/Clinic/Hospital Name:</label><br>
+                    <input type="text" name="ch_name" id="ch_name" pattern="[A-Za-z. ]{1,99}" maxlength="99" placeholder="Chamber/Clinic/Hospital name" style="width:65%;text-align: center;" value="{{ user_ch_name }}">
+                </div>
+                <input type="submit" value="Save">
+            </form>
+            <form method="post" action="{% url 'delete_dector' %}">
+                {% csrf_token %}
+                <button type="submit" id="delete-profile-btn" style="padding: 0 1em 0 1em;font-size: 0.9em;background-color: red;color: white;border-radius: 5em;" class="p_delete">Delete Profile</button>
+            </form>
+            {% else %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

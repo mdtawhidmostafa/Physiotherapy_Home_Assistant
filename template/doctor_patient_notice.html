@@ -1,0 +1,159 @@
+{% include "Header_doctor.html" %}
+<style>
+    .d_home_body{height:35em;overflow: auto;}
+    .d_home_body .d_home_content .left-section .pbp {
+        padding: 0.3em 2.34em;
+        background-color: #437B75;
+    }
+    .d_home_body .d_home_content .left-section .hbp {
+        padding: 0.3em 3.6em;
+    }
+    .d_home_body .d_home_content .left-section .npbp {
+        padding: 0.3em 2.21em;
+    }
+    .d_home_body .d_home_content .left-section .osbp {
+        padding: 0.3em 1.6em;
+    }
+    .d_home_body .d_home_content .left-section .back {
+        margin-top:5em;
+        padding: 0.3em 1em;
+    }
+    .d_home_body .d_home_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    .right-section h2{margin:-0.8em 0 0.5em 0;} 
+    .right-section table, td, th {  
+        border: 0.1em solid #50545c;
+        text-align: center;
+      }
+    .myp_table td, th {  
+        padding: 5px;
+
+      }
+      
+    .myp_table{
+        border-collapse: collapse;
+        width: 100%;
+      }
+    .right-section td button{
+        padding: 0.2em 0.5em;
+        background-color: #5926f0;
+        color: white;
+        font-size: 0.7em;
+        border-radius: 0.9em;
+    }
+    .right-section td button:hover{
+        background-color: #149f32;
+        color: #111111;
+    }
+    .pinfo{
+        text-align:left;
+        font-size:1.1em;
+    }
+    .pinfo ul{list-style-type: none;}
+    .assignd{
+        margin:2em 0 0 0;
+        padding: 0.3em 2.21em;
+        font-size:1em;
+        background-color: #0d72a6;
+        color: #FFFFFF;
+        border-radius:5em;
+    }
+    .assignd:hover{
+        background-color: #149f32;
+        color: #111111;
+    }
+    .upside{display: flex;}
+    .pinfo{flex: 4;}
+    .pbutton{flex: 2; text-align:right;}
+    .pbutton .section{
+        padding: 0.5em 1.3em;
+        font-size:1em;
+        margin:1em 0 0 0;
+        border-radius:5em;
+    }
+    .pbutton .sendm{
+        padding: 0.5em 2em;
+        font-size:1em;
+        margin:1em 0 0 0;
+        border-radius:5em;
+    }
+    .pbutton button{background-color: #0d72a6;color: #FFFFFF;}
+    .pbutton button:hover{background-color: #149f32;color: #111111; }
+</style>
+<section class="d_home_body">
+    <div class="d_home_content">
+        <div class="left-section">
+            <button class="hbp" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pbp" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npbp" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osbp" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+            <button class="back" onclick="goBack()"><i class="fa fa-arrow-circle-left"></i> Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+        </div>
+        <div class="right-section">
+            <h2>Patients Report</h2>
+            <div class="upside">
+                <div class="pinfo">
+                    <ul>
+                        <li><b>Patient Name : </b>{{ patient_data.0.patient_name }}</li>
+                        <li><b>Patient Problem : </b>{{ patient_data.0.patient_problem }}</li>
+                        <li><b>Patient Age : </b>{{ patient_data.0.patient_age }}</li>
+                        <li><b>Patient Phone : </b>{{ patient_data.0.patient_phone }}</li>
+                        <li><b>Patient Email : </b>{{ patient_data.0.patient_email }}</li>
+                    </ul>
+                </div>
+                <div class='pbutton'>
+                    <button class='sendm'>Send Message</button>
+                    <button class='section'>Schedule Session</button>
+                </div>
+            </div>
+            <table class="myp_table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Massage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patient_data|dictsortreversed:"date" %}
+                    <tr>
+                        <td>{{ patient.date }}</td>
+                        <td>{{ patient.message }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button class='assignd'onclick="AssignDoctor('{{ patient_data.0.patient_RID }}')">Assign Another Doctor</button>
+        </div>
+        <script>
+            function AssignDoctor(S_number) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/doctor/another/doctor/';
+        
+                var inputSNumber = document.createElement('input');
+                inputSNumber.type = 'hidden';
+                inputSNumber.name = 'RIDD';
+                inputSNumber.value = S_number;
+        
+                var csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = 'csrfmiddlewaretoken';
+                csrfToken.value = '{{ csrf_token }}';
+
+                form.appendChild(inputSNumber);
+                form.appendChild(csrfToken);
+        
+                document.body.appendChild(form);
+                form.submit();
+            }
+        </script>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

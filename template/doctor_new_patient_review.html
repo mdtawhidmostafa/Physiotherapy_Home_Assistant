@@ -1,0 +1,94 @@
+{% include "Header_doctor.html" %}
+<style>
+    .d_home_body{
+        height:41em;
+        overflow: auto;
+    }
+    .d_home_body .d_home_content .left-section{
+        height:35em;
+    }
+    .d_home_body .d_home_content .right-section{
+        height:23.2em;
+    }
+    .d_home_body .d_home_content .left-section .pbn {
+        padding: 0.3em 2.34em;
+    }
+    .d_home_body .d_home_content .left-section .hbn {
+        padding: 0.3em 3.6em;
+    }
+    .d_home_body .d_home_content .left-section .npbn {
+        padding: 0.3em 2.21em;
+        background-color: #437B75;
+    }
+    .d_home_body .d_home_content .left-section .osbn {
+        padding: 0.3em 1.6em;
+    }
+    .d_home_body .d_home_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    .d_home_body .d_home_content .right-section button {
+        padding: 0.3em 1.6em;
+        font-size:1em;
+        border-radius:5em;
+        color:blue;
+        background-color:rgb(173, 245, 245);
+    }
+    .d_home_body .d_home_content .right-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    .patient_info_re{
+        list-style-type: none;
+        text-align:left;
+        font-size:1.15em;
+    }
+    .horizontal_group_np {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-size:1em;
+    }
+    
+</style>
+<section class="d_home_body">
+    <div class="d_home_content">
+        <div class="left-section">
+            <button class="hbn" onclick="window.location.href = '{% url 'doctor_home' %}';"> Home </button>
+            <button class="pbn" onclick="window.location.href = '{% url 'my_patient' %}';">My patients</button>
+            <button class="npbn" onclick="window.location.href = '{% url 'new_patient' %}';">New patient</button>
+            <!--<button class="osbn" onclick="window.location.href = '{% url 'online_se' %}';"> Online Session</button>-->
+        </div>
+        <div class="right-section">
+                <h1>New Patient Registration</h1>
+                <h2>Patient Information</h2>
+                <ul class="patient_info_re">
+                    {% for item in patient_items %}
+                    <li><b>Patient Name :</b> {{ item.PName }}</li>
+                    <li><b>Patient Age :</b>  {{ item.PAge }}</li>
+                    <li><b>Patient Problem :</b>  {{ item.PDisease }}</li>
+                    <li><b>Patient Phone No :</b>  {{ item.PPhone }}</li>
+                    <li><b>Patient Email :</b>  {{ item.PEmail }}</li>
+                    <li><b>Patient Ref ID :</b>  {{ item.RID }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="horizontal_group_np">
+                    <div style="margin:1em 0 0 1.5em;">
+                        <form method="post" action="{% url 'dpsend_email' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="rid" value="{{ rid }}">
+                            <button type="submit"><b>Email</b><br> Email the Reference ID to patient</button>
+                        </form>
+                    </div>
+                    <div style="margin:1em 1.5em 0 0;">
+                        <form method="post" action=" ">
+                            {% csrf_token %}
+                            <input type="hidden" name="rid" value="{{ rid }}">
+                            <button type="submit"><b>SMS</b><br> SMS the Reference ID to patient</button>
+                        </form>
+                    </div>
+              </div>
+        </div>
+    </div>
+</section>
+{% include "Footer_doctor.html" %}

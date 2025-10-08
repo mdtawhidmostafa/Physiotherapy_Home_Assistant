@@ -1,0 +1,106 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body{height:55em;overflow: auto;}
+    .p_home_content{height:55em;}
+    .img_ex_my button{
+        padding:0 1em 0 1em;
+        font-size:1em;
+        border-radius: 0.2em;
+    }
+    .img_ex_my {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0 0 0 12em;
+    }
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+    }
+    .p_home_body .p_home_content .left-section .back {
+        margin-top:15em;
+        padding: 0.3em 1em;
+    }
+    
+    .video_mark_b{
+        display: flex; 
+        justify-content: center;
+        margin:7% 0 0 0;
+    }
+    .video_mark_b .upload{
+        padding:0.5em 3em;
+        font-size:1em;
+    }
+    .video_mark_b .live{
+        padding:1.5em 3em;
+        font-size:1em;
+    }
+    .video_mark_b button {
+        margin: 0 2em; 
+    }
+    .horizontal_v {
+        display: flex; 
+    }
+    .right-section h1{margin:-0.5em 0 0.5em 0;}
+
+</style>
+
+
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section" style="height:51em;">
+            <button class="hbe" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="ebe" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rbe" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="abe" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+            <button class="back" onclick="goBack()"><i class="fa fa-arrow-circle-left"></i> Back</button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
+        </div>
+        <div class="right-section">
+            <h1>Model Video for {{ex_name}}</h1>
+            <div class="img_ex_my">
+                <video controls width="600" height="540">
+                    <source src="{{ videos }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <section class="video_mark_b">
+                <div class="horizontal_v">
+                    <button class='upload' onclick="redirectTo('{{ rid }}')">UPLOAD RECORDED<br>EXERCISE VIDEO</button>
+                    <button class='live'>Live Session</button>
+                </div>
+                <script>
+                    function redirectTo(rid) {
+                        var inputRid = document.createElement('input');
+                        inputRid.type = 'hidden';
+                        inputRid.name = 'rid';
+                        inputRid.value = rid;
+                        
+                        var csrfToken = document.createElement('input');
+                        csrfToken.type = 'hidden';
+                        csrfToken.name = 'csrfmiddlewaretoken';
+                        csrfToken.value = '{{ csrf_token }}';
+
+                        var form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/patient/problem/excercise/video/upload/';
+                        form.appendChild(inputRid);
+                        form.appendChild(csrfToken);
+                        
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                </script>
+            </section>
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}

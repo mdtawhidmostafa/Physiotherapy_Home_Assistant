@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="/static/images/logoupbr.png">
+    <title> physiotherapy home assistant </title>
+    <link href="/static/css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/d_bord.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+    <section class="heads">
+        <img src="/static/images/logoupbr.png" class="im" id="logo">
+        <script>
+            document.getElementById('logo').addEventListener('click', function() {
+                window.location.href = "{% url 'index' %}";
+            });
+        </script>
+        <h1 id="logot">Physiotherapy Home Assistant</h1>
+        <script>
+            document.getElementById('logot').addEventListener('click', function() {
+                window.location.href = "{% url 'index' %}";
+            });
+        </script>
+        <button onclick="window.location.href = '{% url 'user' %}';"><b>Get Start</b></button>
+    </section>
+    
+    

@@ -1,0 +1,165 @@
+{% include "Header_patient.html" %}
+<style>
+    .parient_profile_body{
+        margin: 2em 0 2em 0;
+        height: 40em;
+    }
+    .parient_profile_body .parient_profile_content{
+        display: flex;
+        width: 100%;
+    }
+    .parient_profile_body .parient_profile_content .left-section {
+        flex: 1;
+        padding: 2em;
+        background-color: rgb(173, 245, 245);
+        height: 36em;
+    }
+    .parient_profile_body .parient_profile_content .left-section button{
+        font-size: 1.3em;
+        border-style: none;
+        border-radius: 5%;
+        margin: 1em 0 0 2.5em;
+        background-color: #31b302;
+        color: #FFFFFF;
+    }
+    .parient_profile_body .parient_profile_content .left-section .rb {
+        padding: 0.3em 3em;
+    }
+    .parient_profile_body .parient_profile_content .left-section .hb {
+        padding: 0.3em 3.25em;
+        background-color: #437B75;
+    }
+    .parient_profile_body .parient_profile_content .left-section .ab {
+        padding: 0.3em 2.1em;
+    }
+    .parient_profile_body .parient_profile_content .left-section .eb {
+        padding: 0.3em 1.7em;
+    }
+    .parient_profile_body .parient_profile_content .left-section button:hover{
+        background-color: #029b26;
+        color: #111111;
+    }
+    
+    .parient_profile_body .parient_profile_content .right-section {
+        flex: 4;
+        padding: 1em;
+        margin-left: 0.5em;
+        background-color: #EEE9E9;
+        text-align: center;
+        font-size: 1.5em;
+    }
+    .parient_profile_body .parient_profile_content .right-section h2{
+        margin-top:0.05em;
+    }
+    .parient_profile_body .parient_profile_content .right-section img{
+        height:4.5em;
+        width:4.5em;
+        margin-top:-0.8em;
+    }
+    .parient_profile_body .parient_profile_content .right-section input{
+        font-size:1em;
+        padding: 0 1em 0 1em;
+        margin:0.3em;
+    }
+    .profile_section1 input{
+        width:8em;
+        text-align:center;
+    }
+    .profile_section2 input{
+        width:12em;
+        text-align:center;
+    }
+    .profile_section3 textarea{
+        width:35em;
+        text-align:center;
+        font-size:1em;
+    }
+    .profile_section1,
+    .profile_section2,
+    .profile_section3 {
+        display: inline-block;
+        vertical-align: top; /* Align sections at the top */
+    }
+
+    .profile_section1 {
+        width: calc(39.33% - 10px); /* One-third of the width */
+    }
+
+    .profile_section2 {
+        width: calc(60.66% - 10px); /* Two-thirds of the width */
+    }
+
+    .profile_section3 {
+        clear: both; /* Ensure the address section is below the other sections */
+        width: 100%;
+    }
+    .p_delete button:hover {
+        background-color: #029b26;
+        color: #111111;
+    }
+</style>
+
+<section class="parient_profile_body">
+    <div class="parient_profile_content">
+        <div class="left-section">
+            <button style="background-color: #31b302;padding: 0.3em 3.25em;" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="eb" onclick="window.location.href = '{% url 'patient_exc' %}';">My Problems</button>
+            <button class="rb" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="ab" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';" style="padding: 0.3em 0.85em;"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';" style="padding: 0.3em 0.75em;"><i class="fa fa-bell"></i> Notice History</button>-->
+        </div>
+        <div class="right-section">
+            {% if user %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{% if message.tags %}alert alert-{{ message.tags }}{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            <h2>Welcome, {{ user_fname }} {{ user_lname }}</h2>
+            <img src="{{ user_photo }}" alt="User Photo">
+            <form method="post" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="profile_section4">
+                    <label for="photo">Profile Photo:</label>
+                    <input type="file" id="photo" name="photo">
+                </div>
+                <div class="profile_section1">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user_fname }}" maxlength="25"><br>
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user_lname }}" maxlength="25"><br>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="{{ user_username }}" readonly><br>
+                    <label for="username">Gender:</label>
+                    <input type="text" id="username" name="username" value="{{ user_gender }}" readonly><br>
+                </div>
+                <div class="profile_section2">
+                    <label for="contact_no">Patient Number:</label>
+                    <input type="text" id="contact_no" name="contact_no" value="{{ user_number }}" readonly><br>
+                    <label for="contact_no">Email Address:</label>
+                    <input type="text" id="contact_no" name="contact_no" value="{{ user_email }}" readonly><br>
+                    <label for="contact_no">Contact Number:</label>
+                    <input type="text" id="contact_no" name="contact_no" value="{{ user_contact }}" readonly><br>
+                    <label for="emergency_contact">Emergency Contact No:</label>
+                    <input type="text" id="emergency_contact" name="emergency_contact" value="{{ user_econtact }}" pattern="[0-9]*" maxlength="11"><br>
+                </div>
+                <div class="profile_section3">
+                    <label for="address">Address:</label><br>
+                    <textarea id="address" name="address" rows="5">{{ user_address }}</textarea><br>
+                </div>
+                <input type="submit" value="Save">
+            </form>
+            <form method="post" action="{% url 'delete_profile' %}">
+                {% csrf_token %}
+                <button type="submit" id="delete-profile-btn" style="padding: 0 1em 0 1em;font-size: 0.9em;background-color: red;color: white;border-radius: 5em;" class="p_delete">Delete Profile</button>
+            </form>
+            {% else %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}

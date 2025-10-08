@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/images/logoupbr.png">
+    <title>Physiotherapy Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="/static/css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/admin.css" rel="stylesheet" type="text/css"/>
+    
+   
+</head>
+<body>
+<section class="admin_header">
+    <div class="header">
+        <div>
+            <button onclick="window.location.href = '{% url 'admin_log' %}';" style="border-radius: 1em;">LogOut</button>
+        </div>
+        <div class="user-info">
+            <img src="{{ user_photo }}" alt="User Photo" id='profile'>
+            <span style="font-size: 1.2em;">{{ user_name }}</span>
+        </div>
+        <script>
+            document.getElementById('profile').addEventListener('click', function() {
+                window.location.href = "{% url 'a_profile' %}";
+            });
+        </script>
+    </div>
+</section>

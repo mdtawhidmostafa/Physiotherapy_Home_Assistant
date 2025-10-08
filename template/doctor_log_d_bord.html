@@ -1,0 +1,18 @@
+{% include "HeaderDL.html"%}
+<section class="photo_section">
+    <img src="/static/images/05.jpg" alt="image loading....">
+    <div class="hovtex">
+        <h3>Let`s make your life happier</h3>
+        <h1>Healthy Living</h1>
+    </div>
+</section>
+<section class="plogbody">
+    <ul>
+        <li><button class="log" onclick="window.location.href = '{% url 'doctorlog' %}';">LogIn</button></li>
+        <li>Already has a account</li>
+        <li><button class="sin" onclick="window.location.href = '{% url 'doctorsin' %}';">SignUp</button></li>
+        <li>Create new account</li>
+    </ul>
+    
+</section>
+{% include "Footer.html" %}

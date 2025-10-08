@@ -1,0 +1,92 @@
+{% include "Header_patient.html" %}
+<style>
+    .p_home_body{overflow: auto;}
+    .p_home_body .p_home_content .left-section .rqbe {
+        padding: 0.3em 0.85em;
+    }
+    .p_home_body .p_home_content .left-section .rbr {
+        background-color: #31b302;
+    }
+    .p_home_body .p_home_content .left-section .nrbe {
+        padding: 0.3em 0.75em;
+        background-color: #437B75;
+    }
+    .right-section table, td, th {  
+        border: 0.1em solid #50545c;
+        text-align: center;
+      }
+    .right-section h1{margin:-0.2em 0 0.5em 0;}  
+    .right-section table {
+        border-collapse: collapse;
+        width: 100%; 
+      }
+      
+    .right-section th, td {
+        padding: 5px;
+      }
+    .right-section td button{
+        padding: 0.2em 1em;
+        background-color: #CA5858;
+        color: white;
+        font-size: 0.7em;
+        border-radius: 0.9em;
+    }
+    .right-section td button:hover{
+        background-color: #149f32;
+        color: #111111;
+    }
+</style>
+<section class="p_home_body">
+    <div class="p_home_content">
+        <div class="left-section">
+            <button class="hbr" onclick="window.location.href = '{% url 'user_home' %}';"> Home </button>
+            <button class="ebr" onclick="window.location.href = '{% url 'patient_exc' %}';">My Exercises</button>
+            <button class="rbr" onclick="window.location.href = '{% url 'patient_report' %}';">Report</button>
+            <button class="abr" onclick="window.location.href = '{% url 'patient_addrid' %}';"> Add New<br> Referral ID</button>
+            <!--<button class="rqbe" onclick="window.location.href = '{% url 'patient_req_s' %}';"> Request Session</button>
+            <button class="nrbe" onclick="window.location.href = '{% url 'p_notice' %}';"><i class="fa fa-bell"></i> Notice History</button>-->
+        </div>
+        <div class="right-section">
+            {% if messages %}
+                <div class="alert alert-success" style="margin:-1.95em 0 0 0;background-color: #029b26;color: white;font-size:1.2em;padding:0.5em;">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <h1> Notice Board </h1>
+            {% if Notice_list %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Doctor Name</th>
+                            <th>Problem Name</th>
+                            <th>Date</th>
+                            <th>Notice Type</th>
+                            <th>Notice Massage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in Notice_list|dictsortreversed:"date" %}
+                            <tr>
+                                <td>{{ item.dname }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.date }}</td>
+                                <td>{{ item.massage_ty }}</td>
+                                <td>{{ item.massage }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            {% if show_message %}
+                <div>
+                    <p>Please consult with a physiotherapist doctor.<br>
+                    After that you can start the exercise using your<br>
+                    <a href="{% url 'patient_addrid' %}" style="text-decoration:none;"><b style="color: #960e0e;">Prescription</a></b> or <a href="{% url 'patient_addrid' %}"style="text-decoration:none;"><b style="color: #960e0e;">Ref ID</b></a>.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% include "Footer_patient.html" %}
