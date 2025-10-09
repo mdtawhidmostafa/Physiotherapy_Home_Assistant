@@ -115,8 +115,8 @@ A deep learning model was trained to **assess physiotherapy exercises** based on
 | **Team Members** | Collaborators | Dataset preparation, UI Design, Testing, Documentation |
 
 ---
-
+<!-- 
 ## 🧠 Citation
 
 If you use this project or its methodology in your research, please cite:
-
+-->
