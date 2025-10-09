@@ -111,8 +111,8 @@ A deep learning model was trained to **assess physiotherapy exercises** based on
 
 | Name | Role | Contribution |
 |------|------|--------------|
-| **Tawhid Mostafa** | Developer / Researcher | AI Model Development, System Integration, Documentation |
-| **Team Members** | Collaborators | Dataset preparation, Web development, Model training, Testing |
+| **Tawhid Mostafa** | Developer / Researcher | AI Model Development, System Integration, Web development, Model training, Dataset preparation, Documentation |
+| **Team Members** | Collaborators | Dataset preparation, UI Design, Testing, Documentation |
 
 ---
 
